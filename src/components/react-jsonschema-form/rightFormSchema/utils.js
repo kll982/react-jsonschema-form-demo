@@ -1,6 +1,12 @@
-import { ColorPicker, DateTimePicker, GeoPosition } from "../widgets";
+import {
+  ColorPicker,
+  DateTimePicker,
+  RangeDateTimePicker,
+  GeoPosition,
+} from "../widgets";
 const widgets = {
   DateTimeWidget: DateTimePicker,
+  RangeDateTimeWidget: RangeDateTimePicker,
   ColorWidget: ColorPicker,
 };
 
@@ -31,36 +37,29 @@ const testSchema = {
       type: "string",
       enumNames: enumName,
       enum: enumValue,
-      default: enumValue[1],
+      default: enumValue[2],
     },
     syncWithSelection: {
       title: "Quick search from nodes",
       type: "boolean",
     },
-    // teaxarea: {
-    //   type: "string",
-    // },
+    teaxarea: {
+      type: "string",
+    },
     ourTimetest: {
-      type: "string",
-    },
-    timetest: {
-      type: "string",
-    },
-    geotest: {
-      type: "object",
-    },
-    colorTest: {
       type: "string",
     },
   },
   definitions: {
     dateTimeRange: {
       properties: {
-        startTime: {
+        from: {
           type: "string",
+          label: false,
         },
-        endTime: {
+        to: {
           type: "string",
+          label: false,
         },
       },
     },
@@ -75,6 +74,7 @@ const testSchema = {
             },
             range: {
               title: "Range",
+              type: "object",
               $ref: "#/definitions/dateTimeRange",
             },
           },
@@ -85,14 +85,17 @@ const testSchema = {
               enum: [enumValue[2]],
             },
             range: {
-              type: "string",
+              type: "object",
               title: "Range",
-              // format: "date-time",
+              $ref: "#/definitions/dateTimeRange",
             },
             range1: {
-              type: "string",
-              title: "Range",
-              // format: "time",
+              type: "object",
+              title: "Range1 Error 不渲染",
+              value: {
+                from: undefined,
+                to: undefined,
+              },
             },
           },
         },
@@ -115,26 +118,28 @@ const testUiSchema = {
     },
   },
   range: {
-    // "ui:widget": "DateTimeWidget",
     "ui:options": {
       label: false,
     },
-    startTime: {
+    from: {
       "ui:widget": "DateTimeWidget",
+      "ui:options": {
+        label: false,
+      },
     },
-    endTime: {
+    to: {
       "ui:widget": "DateTimeWidget",
+      "ui:options": {
+        label: false,
+      },
     },
+  },
+  range1: {
+    "ui:widget": "RangeDateTimeWidget",
   },
   ourTimetest: {
-    // "ui:widget": "date-time",
     "ui:field": "dateTime",
   },
-  timetest: {
-    "ui:widget": "date",
-  },
-  geotest: { "ui:field": "geo" },
-  // "ui:order": ["shipping_address", "billing_address", "tree"],
 };
 
 export { fields, widgets, testSchema, testUiSchema };
