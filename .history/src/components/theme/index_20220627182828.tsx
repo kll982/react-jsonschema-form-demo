@@ -1,1 +1,0 @@
-import "./antd.variable.less";
