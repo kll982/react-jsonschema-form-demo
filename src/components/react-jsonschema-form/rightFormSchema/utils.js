@@ -10,6 +10,22 @@ const widgets = {
   ColorWidget: ColorPicker,
 };
 
+// 抽离Date方法,做组件
+const DatePickerSchema = {
+  type: "object",
+  title: "Range Title",
+  properties: {
+    from: {
+      type: "string",
+      label: false,
+    },
+    to: {
+      type: "string",
+      label: false,
+    },
+  },
+};
+
 const fields = { geo: GeoPosition, dateTime: DateTimePicker };
 const queries = [
   { id: "1e461fe7-e115-493e-8bb6-8fe4eb89f675", title: "Person" },
@@ -29,6 +45,7 @@ const enumName = queries.map((i) => i.title);
 const enumValue = queries.map((i) => i.id);
 
 const rangeShow = [...enumValue].filter((k, i) => i !== 0 && i !== 2);
+
 const testSchema = {
   type: "object",
   properties: {
@@ -46,23 +63,6 @@ const testSchema = {
     teaxarea: {
       type: "string",
     },
-    ourTimetest: {
-      type: "string",
-    },
-  },
-  definitions: {
-    dateTimeRange: {
-      properties: {
-        from: {
-          type: "string",
-          label: false,
-        },
-        to: {
-          type: "string",
-          label: false,
-        },
-      },
-    },
   },
   dependencies: {
     type: {
@@ -72,11 +72,7 @@ const testSchema = {
             type: {
               enum: rangeShow,
             },
-            range: {
-              title: "Range",
-              type: "object",
-              $ref: "#/definitions/dateTimeRange",
-            },
+            range: DatePickerSchema,
           },
         },
         {
@@ -84,11 +80,7 @@ const testSchema = {
             type: {
               enum: [enumValue[2]],
             },
-            range: {
-              type: "object",
-              title: "Range",
-              $ref: "#/definitions/dateTimeRange",
-            },
+            range: DatePickerSchema,
             range1: {
               type: "object",
               title: "Range1 Error 不渲染",
@@ -136,9 +128,6 @@ const testUiSchema = {
   },
   range1: {
     "ui:widget": "RangeDateTimeWidget",
-  },
-  ourTimetest: {
-    "ui:field": "dateTime",
   },
 };
 
