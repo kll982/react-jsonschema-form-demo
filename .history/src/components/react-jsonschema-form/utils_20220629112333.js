@@ -1,0 +1,97 @@
+import { Themes } from "../index";
+
+const { IPAThemeVars, themes } = Themes;
+
+const curTheme = localStorage.getItem("curTheme");
+const formSchema = () => {
+  const schemaObj = {
+    title: "Theme Setting",
+    type: "object",
+    required: ["name"],
+    properties: {
+      name: {
+        type: "string",
+        title: "name",
+        // default: `var(${key})`,
+      },
+      "--primary-text-color": {
+        classNames: "ant-col ant-col-6",
+        type: "string",
+        title: "--primary-text-color",
+        format: "color",
+        default: `var(--primary-text-color)`,
+        handleOnColorChange: (val) => {
+          console.log(val);
+        },
+      },
+      "--primary-text-color1": {
+        classNames: "ant-col ant-col-6",
+        type: "string",
+        title: "--primary-text-color1",
+        format: "color",
+        default: `var(--primary-text-color)`,
+      },
+    },
+  };
+
+  console.log("curTheme");
+  // IPAThemeVars.map(
+  //   (key) =>
+  //     (schemaObj.properties[key] = {
+  // classNames: "ant-col ant-col-6",
+  //       type: "string",
+  //       title: key,
+  //       format: "color",
+  //       default: `var(${themes[curTheme][key]})`,
+  //     })
+  // );
+  return schemaObj;
+};
+const schema = formSchema();
+
+const uiSchema = {
+  options: {
+    classNames: "ant-col ant-col-6",
+    submitButtonOptions: {
+      props: {
+        disabled: false,
+        className: "btn btn-info",
+      },
+      norender: false,
+      submitText: "Submit",
+    },
+  },
+  name: {
+    classNames: "ant-col ant-col-6",
+  },
+  "--primary-text-color": {
+    // handleOnColorChange: (val) => {
+    //   console.log("val", val);
+    // },
+  },
+};
+
+// const testSchema = {
+//   title: "A registration form",
+//   description: "A simple form example.",
+//   type: "object",
+//   required: ["firstName", "lastName"],
+//   properties: {
+//     firstName: {
+//       type: "string",
+//       title: "First name",
+//       default: "Chuck",
+//     },
+//     lastName: {
+//       type: "string",
+//       title: "Last name",
+//     },
+//     telephone: {
+//       type: "string",
+//       title: "Telephone",
+//       minLength: 10,
+//     },
+//   },
+// };
+
+export { schema, uiSchema, curTheme };
