@@ -1,32 +1,68 @@
-import React, { useRef } from "react";
-import { Button, Row, Col } from "antd";
+import React, { useState, useEffect } from "react";
 import RjsfForm from "@rjsf/antd";
-import { testSchema, testUiSchema, widgets, fields } from "./utils";
+import {
+  defaultWidgets,
+  defaultFields,
+  defaultSchema,
+  defaultUiSchema,
+} from "./utils";
 import "../index.less";
 
-export const BasicLayoutForm = () => {
-  const onSubmit = ({ formData }, e) =>
-    console.log("Data submitted: ", formData);
+export const BasicLayoutForm = (props) => {
+  const {
+    schema = defaultSchema,
+    uiSchema = defaultUiSchema,
+    widgets = defaultWidgets,
+    fields = defaultFields,
+    className = "",
+    children,
+    formData = {},
+    // objeoctFieldTemplate, // return JSX Element,可通过 "ui:ObjectFieldTemplate" 字段定义,此处暂不做处理
+    onSubmit = (val) => void val,
+    onError = (val) => void val,
+  } = props;
 
-  const onError = (errors) => {
+  const [_uiSchema, set_uiSchema] = useState(uiSchema);
+
+  useEffect(() => {
+    //  button[type="button"] ,Need to define  button htmlType
+    const uiSchema_submitButton = Object.assign(
+      {
+        props: {
+          htmlType: "submit",
+        },
+      },
+      uiSchema["ui:submitButtonOptions"] || {}
+    );
+    uiSchema_submitButton["props"]["htmlType"] = "submit";
+    set_uiSchema({
+      ...uiSchema,
+      "ui:submitButtonOptions": uiSchema_submitButton,
+    });
+  }, [uiSchema]);
+
+  const onFormSubmit = ({ formData }) => {
+    console.log("Data submitted: ", formData);
+    onSubmit(formData);
+  };
+
+  const onFormError = (errors) => {
     console.log("errors", errors);
+    onError(errors);
   };
 
   return (
-    <div className={"form"}>
-      {/* 默认button type="button" ,需自定义submit button */}
+    <div className={`form ${className}`}>
       <RjsfForm
         widgets={widgets}
-        schema={testSchema}
-        uiSchema={testUiSchema}
-        onSubmit={onSubmit}
-        onError={onError}
+        schema={schema}
+        uiSchema={_uiSchema}
+        onSubmit={onFormSubmit}
+        onError={onFormError}
         fields={fields}
-        // ObjectFieldTemplate={ObjectFieldTemplate}
+        formData={formData}
       >
-        <Button type="primary" htmlType="submit">
-          Search
-        </Button>
+        {children && children}
       </RjsfForm>
     </div>
   );

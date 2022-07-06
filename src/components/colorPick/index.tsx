@@ -5,16 +5,12 @@ import { SketchPicker } from "react-color";
 import "./index.less";
 
 interface ColorPickerProps {
-  color?: string;
   value: string;
   onChange?: (color: string) => void;
-  handleOnColorClick?: () => void;
-  handleOnColorClose?: () => void;
-  handleOnColorChange?: (color: string) => void;
 }
 const ColorPicker = (props: ColorPickerProps) => {
   const [colorPickerVisble, setColorPickerVisble] = useState<boolean>(false);
-  const [color, setColor] = useState<string>(props?.color || props.value);
+  const [color, setColor] = useState<string>(props.value);
 
   useEffect(() => {
     setColorPickerVisble(false);
@@ -23,17 +19,14 @@ const ColorPicker = (props: ColorPickerProps) => {
 
   const handleClick = () => {
     setColorPickerVisble(!colorPickerVisble);
-    props.handleOnColorClick && props.handleOnColorClick();
   };
 
   const handleClose = () => {
     setColorPickerVisble(false);
-    props.handleOnColorClose && props.handleOnColorClose();
   };
 
   const handleChange = (color: { hex: string }) => {
     setColor(color.hex);
-    props.handleOnColorChange && props.handleOnColorChange(color.hex);
     setColorPickerVisble(false);
   };
 
