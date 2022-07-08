@@ -1,4 +1,3 @@
-import { ColorPicker, FileUpload } from "../widgets";
 import {
   nullSchema,
   integerSchema,
@@ -13,25 +12,16 @@ import {
   booleanUiSchema,
   arraySchema,
   arrayUiSchema,
+  widgets,
 } from "../typeSchema";
-import { exampleFields, exampleUiFields } from "../typeFields";
-
-const widgets = {
-  ColorWidget: ColorPicker,
-  FileWidget: FileUpload,
-};
-
-const fields = {
-  ColorFields: ColorPicker,
-  FileFields: FileUpload,
-};
+import { exampleFields, exampleUiFields, fields } from "../typeFields";
 
 const defaultSchema = {
   type: "object",
   properties: {
     // nullSchema,
     exampleFields,
-    // stringSchema,
+    stringSchema,
     // dateSchema,
     // numberSchema,
     // integerSchema,

@@ -8,7 +8,7 @@ const fields = {
 // Example:
 const exampleFields = {
   title: "exampleFields",
-  description: "string type fields",
+  description: "Example fields",
   type: "object",
   properties: {
     color: {
@@ -30,4 +30,4 @@ const exampleUiFields = {
   },
 };
 
-export { exampleFields, exampleUiFields };
+export { exampleFields, exampleUiFields, fields };

@@ -1,3 +1,9 @@
+import { ColorPicker, FileUpload } from "./widgets";
+const widgets = {
+  ColorWidget: ColorPicker,
+  FileWidget: FileUpload,
+};
+
 // Example:
 const nullSchema = {
   title: "nullSchema",
@@ -320,4 +326,5 @@ export {
   arrayUiSchema,
   alltypeSchema,
   alltypeUiSchema,
+  widgets,
 };
