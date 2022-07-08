@@ -5,12 +5,17 @@ import type { UploadFile } from "antd/es/upload/interface";
 import { UploadOutlined } from "@ant-design/icons";
 
 interface FileChange {
-  value?: Array<object>;
-  onChange: (file: Array<object>) => void;
+  value?: UploadFile[];
+  formData?: UploadFile[];
+  onChange: (file: UploadFile[]) => void;
+  option?: object;
 }
 
 const FileWidget = (props: FileChange) => {
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const { value, formData, option } = props;
+  const [fileList, setFileList] = useState<UploadFile[]>(
+    value || formData || []
+  );
 
   useEffect(() => {
     props?.onChange(fileList);
@@ -37,7 +42,7 @@ const FileWidget = (props: FileChange) => {
       newFileList.splice(index, 1);
       setFileList(newFileList);
     },
-    ...props,
+    ...option,
     onChange: handleChange,
     fileList,
   };

@@ -6,11 +6,16 @@ import "./index.less";
 
 interface ColorPickerProps {
   value: string;
-  onChange?: (color: string) => void;
+  formData?: string;
+  onChange?: (color: string | undefined) => void;
 }
 const ColorPicker = (props: ColorPickerProps) => {
   const [colorPickerVisble, setColorPickerVisble] = useState<boolean>(false);
-  const [color, setColor] = useState<string>(props.value);
+  const [color, setColor] = useState<string | undefined>(
+    props.value || props?.formData
+  );
+
+  console.log("props color", props);
 
   useEffect(() => {
     setColorPickerVisble(false);
