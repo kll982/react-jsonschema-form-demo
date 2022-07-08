@@ -14,29 +14,35 @@ import {
   arraySchema,
   arrayUiSchema,
 } from "../typeSchema";
+import { exampleFields, exampleUiFields } from "../typeFields";
 
 const widgets = {
   ColorWidget: ColorPicker,
   FileWidget: FileUpload,
 };
 
-const fields = {};
+const fields = {
+  ColorFields: ColorPicker,
+  FileFields: FileUpload,
+};
 
 const defaultSchema = {
   type: "object",
   properties: {
-    nullSchema,
-    stringSchema,
-    dateSchema,
-    numberSchema,
-    integerSchema,
-    booleanSchema,
-    objectSchema,
-    arraySchema,
+    // nullSchema,
+    exampleFields,
+    // stringSchema,
+    // dateSchema,
+    // numberSchema,
+    // integerSchema,
+    // booleanSchema,
+    // objectSchema,
+    // arraySchema,
   },
 };
 
 const defaultUiSchema = {
+  exampleFields: exampleUiFields,
   stringSchema: stringUiSchema,
   dateSchema: dateUiSchema,
   numberSchema: numberUiSchema,
