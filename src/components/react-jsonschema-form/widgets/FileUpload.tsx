@@ -8,10 +8,11 @@ interface FileChange {
   value?: UploadFile[];
   formData?: UploadFile[];
   onChange: (file: UploadFile[]) => void;
+  option?: object;
 }
 
 const FileWidget = (props: FileChange) => {
-  const { value, formData } = props;
+  const { value, formData, option } = props;
   const [fileList, setFileList] = useState<UploadFile[]>(
     value || formData || []
   );
@@ -41,7 +42,7 @@ const FileWidget = (props: FileChange) => {
       newFileList.splice(index, 1);
       setFileList(newFileList);
     },
-    ...props,
+    ...option,
     onChange: handleChange,
     fileList,
   };
