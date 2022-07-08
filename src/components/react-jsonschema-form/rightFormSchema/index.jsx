@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import RjsfForm from "@rjsf/antd";
+import { ErrorBoundary } from "react-error-boundary";
 import {
   defaultWidgets,
   defaultFields,
@@ -53,17 +54,19 @@ export const BasicLayoutForm = (props) => {
 
   return (
     <div className={`form ${className}`}>
-      <RjsfForm
-        widgets={widgets}
-        schema={schema}
-        uiSchema={_uiSchema}
-        onSubmit={onFormSubmit}
-        onError={onFormError}
-        fields={fields}
-        formData={formData}
-      >
-        {children && children}
-      </RjsfForm>
+      <ErrorBoundary>
+        <RjsfForm
+          widgets={widgets}
+          schema={schema}
+          uiSchema={_uiSchema}
+          onSubmit={onFormSubmit}
+          onError={onFormError}
+          fields={fields}
+          formData={formData}
+        >
+          {children && children}
+        </RjsfForm>
+      </ErrorBoundary>
     </div>
   );
 };
