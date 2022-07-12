@@ -1,5 +1,6 @@
 const path = require("path");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // 通过 npm 安装
+const HtmlWebPackPlugin = require("html-webpack-plugin"); // 通过 npm 安装
 const webpack = require("webpack");
 const { DefinePlugin } = require("webpack");
 
@@ -11,71 +12,24 @@ const lessModuleRegex = /\.module\.less$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
-// // common function to get style loaders
-// const getStyleLoaders = (cssOptions, preProcessor) => {
-//   const loaders = [
-//     require.resolve("style-loader"),
-//     {
-//       loader: require.resolve("css-loader"),
-//       options: cssOptions,
-//     },
-//     {
-//       // Options for PostCSS as we reference these options twice
-//       // Adds vendor prefixing based on your specified browser support in
-//       // package.json
-//       loader: require.resolve("postcss-loader"),
-//       options: {
-//         // Necessary for external CSS imports to work
-//         // https://github.com/facebook/create-react-app/issues/2677
-//         ident: "postcss",
-//         plugins: () => [
-//           require("postcss-flexbugs-fixes"),
-//           require("postcss-preset-env")({
-//             autoprefixer: {
-//               flexbox: "no-2009",
-//             },
-//             stage: 3,
-//           }),
-//         ],
-//       },
-//     },
-//     // {
-//     //   loader: "resolve-url-loader",
-//     //   options: {
-//     //     sourceMap: true,
-//     //     debug: true,
-//     //   },
-//     // },
-//   ];
-//   // if (preProcessor) {
-//   //   loaders.push(require.resolve(preProcessor));
-//   // }
-//   if (preProcessor) {
-//     loaders.push({
-//       loader: require.resolve(preProcessor),
-//       options: cssOptions,
-//     });
-//   }
-//   return loaders;
-// };
-
 module.exports = {
-  entry: "./src/index.tsx",
+  entry: "./src/App.tsx",
   mode: "development",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
+    filename: "[name].bundel.[hash].js",
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
     modules: [path.join(__dirname, "./"), "node_modules"],
     alias: {
       components: path.resolve(__dirname, "./src/components/"),
+      src: path.resolve(__dirname, "./src"),
+      "@": path.resolve(__dirname, "./src"),
     },
   },
   module: {
     strictExportPresence: true,
-    // include: path.appSrc,
     rules: [
       {
         test: /\.(js|jsx)$/,
@@ -99,59 +53,6 @@ module.exports = {
         },
         exclude: /node_modules/,
       },
-      // {
-      //   test: cssRegex,
-      //   exclude: cssModuleRegex,
-      //   use: getStyleLoaders({
-      //     importLoaders: 1,
-      //   }),
-      // },
-      // // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
-      // // using the extension .module.css
-      // {
-      //   test: cssModuleRegex,
-      //   use: getStyleLoaders({
-      //     importLoaders: 1,
-      //     modules: true,
-      //     // getLocalIdent: getCSSModuleLocalIdent,
-      //   }),
-      // },
-      //  {
-      //   test: sassRegex,
-      //   exclude: sassModuleRegex,
-      //   use: getStyleLoaders({ importLoaders: 2 }, 'sass-loader'),
-      // },
-      // // Adds support for CSS Modules, but using SASS
-      // // using the extension .module.scss or .module.sass
-      // {
-      //   test: sassModuleRegex,
-      //   use: getStyleLoaders(
-      //     {
-      //       importLoaders: 2,
-      //       modules: true,
-      //       // getLocalIdent: getCSSModuleLocalIdent,
-      //     },
-      //     'sass-loader'
-      //   ),
-      // },
-      // {
-      //   test: lessRegex,
-      //   exclude: lessModuleRegex,
-      //   use: getStyleLoaders({ importLoaders: 2 }, "less-loader"),
-      // },
-      // // Adds support for CSS Modules, but using SASS
-      // // using the extension .module.scss or .module.sass
-      // {
-      //   test: lessModuleRegex,
-      //   use: getStyleLoaders(
-      //     {
-      //       importLoaders: 2,
-      //       modules: true,
-      //       // getLocalIdent: getCSSModuleLocalIdent,
-      //     },
-      //     "less-loader"
-      //   ),
-      // },
       {
         test: /\.css$/,
         use: [
@@ -211,6 +112,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new CleanWebpackPlugin(), // 清空dist文件夹
     new HtmlWebPackPlugin({
       titel: "react-jsonschema-form-demo",
       filename: "index.html",

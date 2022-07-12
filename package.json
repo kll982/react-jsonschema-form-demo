@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "npx webpack-dev-server --port 3100",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack-dev-server --mode=development --config  webpack.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack -- mode[production] --config webpack.config.js"
   },
   "keywords": [],
   "author": "",
@@ -34,11 +36,18 @@
     "antd-theme-generator": "^1.2.11",
     "axios": "^0.27.2",
     "babel-plugin-import": "^1.13.5",
+    "clean-webpack-plugin": "^4.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",
+    "cytoscape": "^3.22.0",
+    "echarts": "^5.3.3",
+    "echarts-for-react": "^3.0.2",
     "esbuild-loader": "^2.19.0",
     "http-proxy-middleware": "^2.0.6",
+    "json-schema": "^0.4.0",
     "less-loader": "^10.2.0",
+    "loadsh": "^0.0.4",
+    "lodash-contrib": "^4.1200.1",
     "mockjs": "^1.1.0",
     "moment": "^2.29.3",
     "postcss-loader": "6.0.0",
@@ -46,10 +55,12 @@
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^3.1.4",
+    "react-hot-loader": "^4.13.0",
     "react-router-dom": "^6.3.0",
     "react-svg-loader": "^3.0.3",
     "resolve-url-loader": "^5.0.0",
-    "style-loader": "^3.3.1"
+    "style-loader": "^3.3.1",
+    "timer-wheel": "^1.0.0"
   },
   "babel": {
     "presets": [

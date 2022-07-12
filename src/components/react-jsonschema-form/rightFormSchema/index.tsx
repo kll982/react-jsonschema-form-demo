@@ -1,15 +1,32 @@
 import React, { useState, useEffect } from "react";
 import RjsfForm from "@rjsf/antd";
-import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundary, useErrorHandler } from "react-error-boundary";
 import {
   defaultWidgets,
   defaultFields,
   defaultSchema,
   defaultUiSchema,
 } from "./utils";
+import _ from "lodash-contrib";
+import { JSONSchema7 } from "json-schema";
+import { UiSchema } from "@rjsf/core";
 import "../index.less";
 
-export const BasicLayoutForm = (props) => {
+const RjsfFormComponent: React.FC<any> = RjsfForm as any;
+
+interface RjsfProps {
+  schema?: JSONSchema7;
+  uiSchema?: UiSchema;
+  widgets?: object;
+  fields?: object;
+  className?: string;
+  children?: HTMLElement;
+  formData?: object;
+  onSubmit?: (val: object) => void;
+  onError?: (val: Array<object>) => void;
+}
+
+export const BasicLayoutForm = (props: RjsfProps) => {
   const {
     schema = defaultSchema,
     uiSchema = defaultUiSchema,
@@ -24,6 +41,7 @@ export const BasicLayoutForm = (props) => {
   } = props;
 
   const [_uiSchema, set_uiSchema] = useState(uiSchema);
+  const handleError = useErrorHandler();
 
   useEffect(() => {
     //  button[type="button"] ,Need to define  button htmlType
@@ -42,31 +60,28 @@ export const BasicLayoutForm = (props) => {
     });
   }, [uiSchema]);
 
-  const onFormSubmit = ({ formData }) => {
-    console.log("Data submitted: ", formData);
+  const onFormSubmit = ({ formData }: { formData: object }) => {
     onSubmit(formData);
   };
 
-  const onFormError = (errors) => {
-    console.log("errors", errors);
+  const onFormError = (errors: Array<object>) => {
     onError(errors);
   };
+  // useEffect(() => {}, [schema, uiSchema, formData]);
 
   return (
     <div className={`form ${className}`}>
-      <ErrorBoundary>
-        <RjsfForm
-          widgets={widgets}
-          schema={schema}
-          uiSchema={_uiSchema}
-          onSubmit={onFormSubmit}
-          onError={onFormError}
-          fields={fields}
-          formData={formData}
-        >
-          {children && children}
-        </RjsfForm>
-      </ErrorBoundary>
+      <RjsfFormComponent
+        widgets={widgets}
+        schema={schema}
+        uiSchema={_uiSchema}
+        onSubmit={onFormSubmit}
+        onError={onFormError}
+        fields={fields}
+        formData={formData}
+      >
+        {children && children}
+      </RjsfFormComponent>
     </div>
   );
 };

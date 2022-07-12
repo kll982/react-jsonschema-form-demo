@@ -15,8 +15,6 @@ const ColorPicker = (props: ColorPickerProps) => {
     props.value || props?.formData
   );
 
-  console.log("props color", props);
-
   useEffect(() => {
     setColorPickerVisble(false);
     props.onChange && props.onChange(color);

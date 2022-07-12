@@ -32,7 +32,6 @@ const FileWidget = (props: FileChange) => {
     // .filter((file) => file.status === "done");
 
     setFileList(newFileList);
-    console.log("info", info, newFileList);
   };
   const uploadProps: UploadProps = {
     action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
