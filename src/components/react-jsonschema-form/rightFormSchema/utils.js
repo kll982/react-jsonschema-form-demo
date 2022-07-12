@@ -30,7 +30,7 @@ const defaultSchema = {
     // nullSchema,
     // exampleFields,
     stringSchema,
-    // dateSchema,
+    dateSchema,
     // numberSchema,
     // integerSchema,
     // booleanSchema,
