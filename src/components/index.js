@@ -1,5 +1,5 @@
 import * as Themes from "./theme";
-import BaseForm from "./react-jsonschema-form";
+import { ThemesForm, BasicLayoutForm } from "./react-jsonschema-form";
 
-export { BaseForm, Themes };
+export { ThemesForm, BasicLayoutForm, Themes };
 export * from "./theme";
