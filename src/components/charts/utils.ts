@@ -1,4 +1,5 @@
-const bgColor: string = "white";
+import { bgColor, colors } from "@/mock/sunburst-data";
+
 const defaultPieOption = {
   backgroundColor: bgColor,
   series: {
@@ -30,4 +31,24 @@ const defaultPieOption = {
   },
 };
 
-export { defaultPieOption };
+const itemStyle = (index: number) => ({
+  color: colors[index % 2],
+  borderWidth: 2,
+});
+
+const label = {
+  rotate: 0,
+  color: "#333",
+};
+
+const onionSeries = {
+  emphasis: {
+    itemStyle: { color: "#ff0" },
+  },
+  select: {
+    itemStyle: { color: "#1B4DF0" },
+  },
+  highlightPolicy: "descendant", // 高亮是圆环显示形式
+};
+
+export { defaultPieOption, itemStyle, label, onionSeries };

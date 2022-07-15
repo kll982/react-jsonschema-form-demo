@@ -1,6 +1,13 @@
 import * as Themes from "./theme";
 import { ThemesForm, BasicLayoutForm } from "./react-jsonschema-form";
-import { SunburstCharts, RingCharts } from "./charts";
+import { SunburstCharts, SunburstCharts2, RingCharts } from "./charts";
 
-export { ThemesForm, BasicLayoutForm, Themes, SunburstCharts, RingCharts };
+export {
+  ThemesForm,
+  BasicLayoutForm,
+  Themes,
+  SunburstCharts,
+  SunburstCharts2,
+  RingCharts,
+};
 export * from "./theme";
