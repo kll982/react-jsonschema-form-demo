@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import echarts from "echarts";
 import EChartsReact from "echarts-for-react";
-import { defaultPieOption } from "./utils";
 import { weekDays, dayliys } from "@/mock/sunburst-data";
+import { defaultPieOption } from "./utils";
 
 const weekday: { name: any; value: number }[] = [];
 weekDays.map((item: { children: any[] }) => weekday.push(...item.children));
@@ -11,10 +10,8 @@ const dayHour: { name: any; value: number }[] = [];
 dayliys.map((item: { children: any[] }) => dayHour.push(...item.children));
 
 export default class Pie extends Component {
-  charts: null | EChartsReact;
   constructor(props: {} | Readonly<{}>) {
     super(props);
-    this.charts = null;
     this.state = {
       selectedArr: [{ dataIndex: [1], seriesIndex: 3 }],
     };
@@ -22,8 +19,8 @@ export default class Pie extends Component {
   getOption = () => {
     const { series, backgroundColor } = defaultPieOption;
     const { itemStyle } = series;
-    let option;
-    option = {
+    let option = {
+      title: { text: "环形图  react-echarts" },
       backgroundColor,
       series: [
         {
@@ -37,7 +34,7 @@ export default class Pie extends Component {
           },
           data: weekDays.map(
             (item: { title: any; name: any; children: object[] }) => ({
-              name: item.name,
+              ...item,
               value: item.children.length,
             })
           ),
@@ -65,7 +62,7 @@ export default class Pie extends Component {
           startAngle: -15, // 起始角度
           data: dayliys.map(
             (item: { title: any; name: any; children: object[] }) => ({
-              name: item.name,
+              ...item,
               value: item.children.length,
             })
           ),
@@ -95,35 +92,14 @@ export default class Pie extends Component {
     selected,
   }: {
     selected: Array<{ dataIndex: Array<Number>; seriesIndex: number }>;
-  }) => {
-    // this.setState(
-    //   {
-    //     selectedArr: selected,
-    //   },
-    //   () => {
-    //     console.log(this.state?.selectedArr);
-    //   }
-    // );
-  };
+  }) => {};
 
   render() {
     let onEvents = {
       selectchanged: this.onChartSelected.bind(this),
       select: this.onChartClick.bind(this),
-      // pieSelect: () => {},
     };
 
-    // let dispatchAction = {
-    //   pieSelect: () => {},
-    // };
-
-    return (
-      <EChartsReact
-        ref={(charts) => (this.charts = charts)}
-        option={this.getOption()}
-        onEvents={onEvents}
-        // dispatchAction={dispatchAction}
-      />
-    );
+    return <EChartsReact option={this.getOption()} onEvents={onEvents} />;
   }
 }

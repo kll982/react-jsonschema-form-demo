@@ -4,23 +4,26 @@ import { createRoot } from "react-dom/client";
 // import { Link, BrowserRouter } from "react-router-dom";
 import { Row, Col } from "antd";
 import Router from "./route";
+
 import {
-  BasicLayoutForm as BaseForm,
-  Themes,
   SunburstCharts,
   SunburstCharts2,
   RingCharts,
+  RingCharts2,
 } from "./components";
 import "./mock/mock";
-
-const { ThemeSwitcher } = Themes;
 
 class App extends React.Component {
   render() {
     return (
       <div className="formRoot">
         <Row>
-          <Col span={12}>{/* <RingCharts /> */}</Col>
+          <Col span={12}>
+            <RingCharts />
+          </Col>
+          <Col span={12}>
+            <RingCharts2 />
+          </Col>
           <Col span={12}>
             <SunburstCharts />
           </Col>
@@ -28,7 +31,6 @@ class App extends React.Component {
             <SunburstCharts2 />
           </Col>
         </Row>
-        {/* <ThemeSwitcher /> */}
       </div>
     );
   }

@@ -24,6 +24,7 @@ export default class Pie extends Component {
     }[];
   };
   chartSunburst: any;
+  sunburstCharts: HTMLDivElement | HTMLCanvasElement;
 
   async componentDidMount() {
     this.chartSunburst = echarts.init(this.sunburstCharts) as HTMLCanvasElement;
@@ -40,35 +41,6 @@ export default class Pie extends Component {
       console.log("charts params", params);
     });
   }
-
-  highlight = () => {
-    this.chartSunburst.dispatchAction({
-      type: "highlight",
-      seriesIndex: [0, 1],
-      dataIndexInside: [8, 1],
-    });
-  };
-  downplay = () => {
-    this.chartSunburst.dispatchAction({
-      type: "downplay",
-      seriesIndex: [0],
-      dataIndexInside: [8],
-    });
-  };
-  select = () => {
-    this.chartSunburst.dispatchAction({
-      type: "select",
-      seriesIndex: [0, 1],
-      dataIndexInside: [8, 1],
-    });
-  };
-  unselect = () => {
-    this.chartSunburst.dispatchAction({
-      type: "unselect",
-      seriesIndex: [0],
-      dataIndexInside: [8],
-    });
-  };
 
   getOption = () => ({
     title: { text: "旭日图 echarts" },
@@ -126,6 +98,35 @@ export default class Pie extends Component {
       },
     ],
   });
+
+  highlight = () => {
+    this.chartSunburst.dispatchAction({
+      type: "highlight",
+      seriesIndex: [0, 1],
+      dataIndexInside: [8, 1],
+    });
+  };
+  downplay = () => {
+    this.chartSunburst.dispatchAction({
+      type: "downplay",
+      seriesIndex: [0],
+      dataIndexInside: [8],
+    });
+  };
+  select = () => {
+    this.chartSunburst.dispatchAction({
+      type: "select",
+      seriesIndex: [0, 1],
+      dataIndexInside: [8, 1],
+    });
+  };
+  unselect = () => {
+    this.chartSunburst.dispatchAction({
+      type: "unselect",
+      seriesIndex: [0],
+      dataIndexInside: [8],
+    });
+  };
 
   render() {
     return (
