@@ -156,7 +156,7 @@ export default class Pie extends Component {
     ]
   ) => {
     const selectedArr: number[][] = [[], [], [], []];
-    selected.map(({ seriesIndex, dataIndex }) => {
+    selected.map(({ seriesIndex, dataIndex }, index) => {
       selectedArr[seriesIndex] = dataIndex || [];
       switch (seriesIndex) {
         case 0:
@@ -172,9 +172,15 @@ export default class Pie extends Component {
           break;
       }
     });
-    this.setState({
-      selectedArr,
-    });
+    console.log("charts", selectedArr);
+    // this.setState(
+    //   {
+    //     selectedArr,
+    //   },
+    //   () => {
+    //     this.selectFunc();
+    //   }
+    // );
     return selectedArr;
   };
 
