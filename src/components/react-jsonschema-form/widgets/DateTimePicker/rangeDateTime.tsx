@@ -26,7 +26,6 @@ interface SearchRangePickerProps {
 export default function SearchRangePicker(props: SearchRangePickerProps) {
   const contRef = useRef(null);
   const { formData, value } = props;
-  console.log("datePicker: formData, value", props);
   //   const timesValue = (value && moment(value)) || (formData && moment(formData));
   const timesValue = formData || value;
 

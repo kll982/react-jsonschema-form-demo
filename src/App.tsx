@@ -17,8 +17,8 @@ class App extends React.Component {
   render() {
     return (
       <div className="formRoot">
-        <RingCharts />
-        {/* <SunburstCharts /> */}
+        {/* <RingCharts /> */}
+        <SunburstCharts />
         {/* <ThemeSwitcher /> */}
       </div>
     );

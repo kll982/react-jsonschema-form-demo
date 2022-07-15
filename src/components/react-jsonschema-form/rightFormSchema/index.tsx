@@ -61,12 +61,10 @@ export const BasicLayoutForm = (props: RjsfProps) => {
   }, [uiSchema]);
 
   const onFormSubmit = ({ formData }: { formData: object }) => {
-    console.log("Data submitted: ", formData);
     onSubmit(formData);
   };
 
   const onFormError = (errors: Array<object>) => {
-    console.log("errors", errors);
     onError(errors);
   };
   // useEffect(() => {}, [schema, uiSchema, formData]);

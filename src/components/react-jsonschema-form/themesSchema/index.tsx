@@ -27,15 +27,18 @@ interface RjsfProps {
 }
 
 const ThemesForm = (props: RjsfProps) => {
+  const { onSubmit = (val) => void val, onError = (val) => void val } = props;
   // 覆盖原来的 组件
   const widgets = {
     ColorWidget: ColorPicker,
   };
-  const onSubmit = ({ formData }: { formData: object }) =>
-    console.log("Data submitted: ", formData);
 
-  const onError = (errors: Array<object>) => {
-    console.log("errors", errors);
+  const onFormSubmit = ({ formData }: { formData: object }) => {
+    onSubmit(formData);
+  };
+
+  const onFormError = (errors: Array<object>) => {
+    onError(errors);
   };
 
   return (
@@ -44,8 +47,8 @@ const ThemesForm = (props: RjsfProps) => {
         schema={schema}
         uiSchema={uiSchema}
         widgets={widgets}
-        onSubmit={onSubmit}
-        onError={onError}
+        onSubmit={onFormSubmit}
+        onError={onFormError}
       >
         <div>
           <Button

@@ -1,4 +1,4 @@
-import { colors, bgColor, itemStyle } from "./sunburst-color";
+import { colors, bgColor } from "./sunburst-color";
 
 const dayliys = [
   {
@@ -170,8 +170,8 @@ const weekDays = [
   },
 ];
 
-const deepData = (weekDays, dayliys = []) => {
-  if (!weekDays) return;
+const deepData = (weekDays = [], dayliys = []) => {
+  if (!weekDays) return [];
   return weekDays.map((item, index) => {
     let child = [];
     if (item.children) {
@@ -180,18 +180,11 @@ const deepData = (weekDays, dayliys = []) => {
       child = deepData(dayliys);
     }
     return {
-      label: {
-        color: item.color,
-      },
-      name: item.title || item.name,
-      itemStyle: {
-        color: item.color || colors[index],
-      },
+      name: item.name,
       children: child,
     };
   });
 };
 const data = deepData(weekDays, dayliys);
-console.log("charts", data);
 
-export { data, colors, bgColor, itemStyle, dayliys, weekDays };
+export { data, colors, bgColor, dayliys, weekDays };

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import echarts from "echarts";
 import EChartsReact from "echarts-for-react";
 import { defaultPieOption } from "./utils";
 import { weekDays, dayliys } from "@/mock/sunburst-data";
@@ -14,6 +15,9 @@ export default class Pie extends Component {
   constructor(props: {} | Readonly<{}>) {
     super(props);
     this.charts = null;
+    this.state = {
+      selectedArr: [{ dataIndex: [1], seriesIndex: 3 }],
+    };
   }
   getOption = () => {
     const { series, backgroundColor } = defaultPieOption;
@@ -83,13 +87,42 @@ export default class Pie extends Component {
     return option;
   };
 
-  componentDidMount() {}
+  onChartClick = (e: any) => {
+    console.log("onChartClick", e);
+  };
+
+  onChartSelected = ({
+    selected,
+  }: {
+    selected: Array<{ dataIndex: Array<Number>; seriesIndex: number }>;
+  }) => {
+    // this.setState(
+    //   {
+    //     selectedArr: selected,
+    //   },
+    //   () => {
+    //     console.log(this.state?.selectedArr);
+    //   }
+    // );
+  };
 
   render() {
+    let onEvents = {
+      selectchanged: this.onChartSelected.bind(this),
+      select: this.onChartClick.bind(this),
+      // pieSelect: () => {},
+    };
+
+    // let dispatchAction = {
+    //   pieSelect: () => {},
+    // };
+
     return (
       <EChartsReact
         ref={(charts) => (this.charts = charts)}
         option={this.getOption()}
+        onEvents={onEvents}
+        // dispatchAction={dispatchAction}
       />
     );
   }

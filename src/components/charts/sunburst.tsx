@@ -1,113 +1,84 @@
 import React, { useEffect, Component } from "react";
 import ReactEcharts from "echarts-for-react";
-import { data, colors, bgColor, itemStyle } from "@/mock/sunburst-data";
+import { bgColor, colors, weekDays, dayliys } from "@/mock/sunburst-data";
+
+const label = {
+  rotate: 0,
+  color: "#333",
+};
+const itemStyle = (index: number) => ({
+  color: colors[index % 2],
+  borderColor: bgColor,
+  borderWidth: 2,
+});
+
+const onionSeries = {
+  emphasis: {
+    itemStyle: { color: "#1B4DF0" },
+  },
+};
 
 export default class Pie extends Component {
   getOption = () => {
     let option;
-    for (let j = 0; j < data.length; ++j) {
-      let level1 = data[j].children;
-      for (let i = 0; i < level1.length; ++i) {
-        let block = level1[i].children;
-        for (let day = 0; day < block.length; ++day) {
-          let style = itemStyle.star1;
-          block[day].label = {
-            // color: style.color,
-            downplay: {
-              opacity: 0.5,
-            },
-          };
-          if (block[day]?.children) {
-            style = {
-              opacity: 1,
-              color: style.color,
-            };
-            block[day].children.forEach(function (book: {
-              value: number;
-              itemStyle: any;
-              label: { color: any };
-            }) {
-              book.value = 1;
-              book.itemStyle = style;
-              book.label = {
-                color: style.color,
-              };
-            });
-          }
-        }
-      }
-    }
     option = {
       title: { text: "旭日图" },
       backgroundColor: bgColor,
-      color: colors,
+      color: [...colors, ...colors],
       series: [
         {
           type: "sunburst",
           center: ["50%", "48%"],
-          data: data,
-          sort: function (
-            a: { depth: number; getValue: () => number; dataIndex: number },
-            b: { getValue: () => number; dataIndex: number }
-          ) {
-            if (a.depth === 1) {
-              return b.getValue() - a.getValue();
-            } else {
-              return a.dataIndex - b.dataIndex;
-            }
-          },
+          data: weekDays,
+          nodeClick: false,
           label: {
             rotate: "radial",
             color: bgColor,
-          },
-          itemStyle: {
-            borderColor: bgColor,
-            borderWidth: 2,
           },
           levels: [
             {},
             {
               r0: 5,
               r: 80,
-              label: {
-                rotate: 0,
-              },
+              label,
+              itemStyle: itemStyle(0),
+              ...onionSeries,
             },
             {
               r0: 80,
               r: 115,
+              label,
+              itemStyle: itemStyle(1),
+              ...onionSeries,
             },
+          ],
+        },
+        {
+          type: "sunburst",
+          center: ["50%", "48%"],
+          data: dayliys,
+          label,
+          nodeClick: false,
+          levels: [
+            {},
             {
-              r0: 135,
+              r0: 125,
               r: 160,
-              itemStyle: {
-                shadowBlur: 2,
-                shadowColor: colors[2],
-                color: "transparent",
-              },
-              label: {
-                rotate: "tangential",
-                fontSize: 10,
-                color: colors[0],
-              },
+              label,
+              itemStyle: itemStyle(0),
+              ...onionSeries,
             },
             {
               r0: 160,
               r: 185,
-              itemStyle: {
-                shadowBlur: 80,
-                shadowColor: colors[0],
-              },
-              label: {
-                position: "outside",
-                textShadowBlur: 5,
-                textShadowColor: "#333",
-              },
+              label,
               downplay: {
                 label: {
                   opacity: 0.5,
                 },
               },
+              itemStyle: itemStyle(1),
+              ...onionSeries,
             },
           ],
         },
@@ -115,7 +86,28 @@ export default class Pie extends Component {
     };
     return option;
   };
+
+  onChartClick = (e: any) => {
+    console.log("onChartClick", e);
+  };
+
+  onChartSelected = ({
+    selected,
+  }: {
+    selected: Array<{ dataIndex: Array<Number>; seriesIndex: number }>;
+  }) => {
+    console.log("onChartClick", selected);
+  };
+
+  dispatchAction = () => {};
+
   render() {
-    return <ReactEcharts option={this.getOption()} />;
+    let onEvents = {
+      selectchanged: this.onChartSelected.bind(this),
+      click: this.onChartClick.bind(this),
+      dispatchAction: this.dispatchAction.bind(this),
+    };
+
+    return <ReactEcharts option={this.getOption()} onEvents={onEvents} />;
   }
 }

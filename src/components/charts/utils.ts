@@ -1,4 +1,4 @@
-const bgColor = "white";
+const bgColor: string = "white";
 const defaultPieOption = {
   backgroundColor: bgColor,
   series: {
@@ -8,7 +8,7 @@ const defaultPieOption = {
       position: "inside",
     },
     itemStyle: {
-      color: (index = 0) =>
+      color: (index: number) =>
         index % 2 === 1 ? "rgba(0,145,255,.3)" : "rgba(0,145,255,.4)",
       borderColor: bgColor,
       borderWidth: 2,
