@@ -10,6 +10,7 @@ import {
   SunburstCharts2,
   RingCharts,
   RingCharts2,
+  RingHooks,
 } from "./components";
 import "./mock/mock";
 
@@ -18,18 +19,19 @@ class App extends React.Component {
     return (
       <div className="formRoot">
         <Row>
-          <Col span={12}>
-            <RingCharts />
-          </Col>
+          {/* <Col span={12}><RingCharts /></Col> */}
           <Col span={12}>
             <RingCharts2 />
           </Col>
           <Col span={12}>
+            <RingHooks />
+          </Col>
+          {/* <Col span={12}>
             <SunburstCharts />
           </Col>
           <Col span={12}>
             <SunburstCharts2 />
-          </Col>
+          </Col> */}
         </Row>
       </div>
     );

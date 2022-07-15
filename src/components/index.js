@@ -5,6 +5,7 @@ import {
   SunburstCharts2,
   RingCharts,
   RingCharts2,
+  RingHooks,
 } from "./charts";
 
 export {
@@ -15,5 +16,6 @@ export {
   SunburstCharts2,
   RingCharts,
   RingCharts2,
+  RingHooks,
 };
 export * from "./theme";
