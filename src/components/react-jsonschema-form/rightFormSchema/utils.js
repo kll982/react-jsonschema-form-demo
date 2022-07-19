@@ -20,9 +20,9 @@ const defaultSchema = {
   type: "object",
   properties: {
     // nullSchema,
-    exampleFields,
+    // exampleFields,
     stringSchema,
-    // dateSchema,
+    dateSchema,
     // numberSchema,
     // integerSchema,
     // booleanSchema,
@@ -32,6 +32,12 @@ const defaultSchema = {
 };
 
 const defaultUiSchema = {
+  color: {
+    "ui:widget": "color",
+    colOption: {
+      span: 12,
+    },
+  },
   exampleFields: exampleUiFields,
   stringSchema: stringUiSchema,
   dateSchema: dateUiSchema,

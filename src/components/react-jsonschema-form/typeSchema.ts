@@ -7,13 +7,13 @@ const widgets = {
 // Example:
 const nullSchema = {
   title: "nullSchema",
-  description: "null type schema",
+  description: "---------- null type schema ----------",
   type: "null",
 };
 
 const stringSchema = {
   title: "stringSchema",
-  description: "string type schema",
+  description: "---------- string type schema ----------",
   type: "object",
   properties: {
     string: {
@@ -24,13 +24,13 @@ const stringSchema = {
       label: "string",
       type: "string",
     },
-    textarea: {
-      type: "string",
-    },
     color: {
       type: "string",
     },
     email: {
+      type: "string",
+    },
+    textarea: {
       type: "string",
     },
     file: {
@@ -53,17 +53,18 @@ const stringSchema = {
 };
 
 const stringUiSchema = {
+  "ui:rootFieldId": "string_Schema",
   text: {
     "ui:widget": "text",
-  },
-  textarea: {
-    "ui:widget": "textarea",
   },
   color: {
     "ui:widget": "color",
   },
   email: {
     "ui:widget": "email",
+  },
+  textarea: {
+    "ui:widget": "textarea",
   },
   file: {
     "ui:widget": "file",
@@ -88,7 +89,7 @@ const stringUiSchema = {
 
 const dateSchema = {
   title: "dateSchema",
-  description: "date type schema",
+  description: "---------- date type schema ----------",
   type: "object",
   properties: {
     altDateTime: {
@@ -125,12 +126,13 @@ const dateUiSchema = {
 
 const numberSchema = {
   title: "numberSchema",
-  description: "number type schema",
+  description: "---------- number type schema ----------",
   type: "object",
   properties: {
     number: {
       label: "number",
-      description: "number is not supported step, min, max",
+      description:
+        "---------- number is not supported step, min, max ----------",
       type: "number",
     },
     updown_step: {
@@ -156,7 +158,7 @@ const numberUiSchema = {
 
 const integerSchema = {
   title: "integerSchema",
-  description: "integer type schema",
+  description: "---------- integer type schema ----------",
   type: "object",
   properties: {
     integer: {
@@ -168,7 +170,7 @@ const integerSchema = {
 
 const booleanSchema = {
   title: "booleanSchema",
-  description: "boolean type schema",
+  description: "---------- boolean type schema ----------",
   type: "object",
   properties: {
     boolean: {
@@ -195,14 +197,14 @@ const booleanUiSchema = {
 
 const objectSchema = {
   title: "objectSchema",
-  description: "object type schema",
+  description: "---------- object type schema ----------",
   type: "object",
   properties: {},
 };
 
 const arraySchema = {
   title: "arraySchema",
-  description: "array type schema",
+  description: "---------- array type schema ----------",
   type: "object",
   properties: {
     array_orderable: {
