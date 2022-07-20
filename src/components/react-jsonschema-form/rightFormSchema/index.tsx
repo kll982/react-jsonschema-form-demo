@@ -15,13 +15,23 @@ import "../index.less";
 
 const RjsfFormComponent: React.FC<any> = RjsfForm as any;
 
+export interface PropertyDetail {
+  content: {
+    props?: any;
+  };
+}
+export interface CustomizeFormProperties {
+  title: string;
+  description: string;
+  properties?: PropertyDetail[];
+}
 interface RjsfProps {
   schema?: JSONSchema7;
   uiSchema?: UiSchema;
   widgets?: object;
   fields?: object;
   className?: string;
-  children?: HTMLElement;
+  children?: React.ReactNode;
   formData?: object;
   onSubmit?: (val: object) => void;
   onError?: (val: Array<object>) => void;
@@ -39,7 +49,7 @@ interface RjsfProps {
  * @version 0.1
  */
 
-const ObjectFieldTemplate = (props: JSONSchema7) => {
+const ObjectFieldTemplate = (props: CustomizeFormProperties) => {
   return (
     <Row gutter={[16, 16]}>
       <Col span={24} style={{ color: "red" }}>
@@ -47,7 +57,7 @@ const ObjectFieldTemplate = (props: JSONSchema7) => {
       </Col>
       <Col span={24}>{props.description}</Col>
       {props?.properties &&
-        props?.properties?.map((element: JSONSchema7Definition) => {
+        props?.properties?.map((element) => {
           const colOption =
             element?.content?.props?.uiSchema?.colOption ||
             element?.content?.props?.schema?.colOption;

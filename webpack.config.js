@@ -19,6 +19,10 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].bundel.[hash].js",
   },
+  devServer: {
+    hot: true,
+    historyApiFallback: true,
+  },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
     modules: [path.join(__dirname, "./"), "node_modules"],

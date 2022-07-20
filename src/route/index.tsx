@@ -11,30 +11,36 @@ namespace SyncRoute {
 // 这个主要是路由表组件的写法
 import React, { Suspense, lazy } from "react";
 import { useRoutes, RouteObject } from "react-router-dom";
-import Home from "../home";
-const RouteTable: SyncRoute.Routes[] = [
+import Home from "src/pages/home";
+import { IdSearch } from "src/pages/idSearch";
+
+import {
+  SunburstCharts,
+  SunburstCharts2,
+  RingCharts,
+  RingCharts2,
+  RingHooks,
+  BasicLayoutForm,
+} from "src/components";
+
+const Routers = [
   {
     path: "/",
-    component: <Home />,
-    children: [],
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      { path: "/home", element: <Home /> },
+      { path: "/BasicLayoutForm", element: <BasicLayoutForm /> },
+      { path: "/idSearch", element: <IdSearch /> },
+    ],
   },
 ];
 
-const syncRouter = (table: SyncRoute.Routes[]): RouteObject[] => {
-  let mRouteTable: RouteObject[] = [];
-  table.forEach((route) => {
-    mRouteTable.push({
-      path: route.path,
-      element: (
-        <Suspense fallback={<div>路由加载ing...</div>}>
-          <route.component />
-        </Suspense>
-      ),
-      children: route.children && syncRouter(route.children),
-    });
-  });
-  return mRouteTable;
-};
+const Router = () => {
+  const routes = useRoutes(Routers);
 
-// 直接暴露成一个组件调用
-export default () => useRoutes(syncRouter(RouteTable));
+  return routes;
+};
+export default Router;

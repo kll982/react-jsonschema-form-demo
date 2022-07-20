@@ -32,12 +32,6 @@ const defaultSchema = {
 };
 
 const defaultUiSchema = {
-  color: {
-    "ui:widget": "color",
-    colOption: {
-      span: 12,
-    },
-  },
   exampleFields: exampleUiFields,
   stringSchema: stringUiSchema,
   dateSchema: dateUiSchema,
