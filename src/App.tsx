@@ -1,9 +1,11 @@
 import React from "react";
 import "./App.less";
 import { createRoot } from "react-dom/client";
-// import { Link, BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { Row, Col } from "antd";
-import Router from "./route";
+import RouteTable from "./route";
+
+import Home from "src/pages/home";
 
 import {
   SunburstCharts,
@@ -19,7 +21,9 @@ class App extends React.Component {
   render() {
     return (
       <div className="formRoot">
-        <BasicLayoutForm />
+        <HashRouter>
+          <RouteTable></RouteTable>
+        </HashRouter>
         {/* <Row>
           <Col span={12}>
             <RingCharts />
