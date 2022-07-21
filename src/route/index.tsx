@@ -12,6 +12,7 @@ namespace SyncRoute {
 import React, { Suspense, lazy } from "react";
 import { useRoutes, RouteObject } from "react-router-dom";
 import Home from "src/pages/home";
+import { IdSearch } from "src/pages/idSearch";
 
 import {
   SunburstCharts,
@@ -22,20 +23,23 @@ import {
   BasicLayoutForm,
 } from "src/components";
 
+const Routers = [
+  {
+    path: "/",
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      { path: "/home", element: <Home /> },
+      { path: "/BasicLayoutForm", element: <BasicLayoutForm /> },
+      { path: "/idSearch", element: <IdSearch /> },
+    ],
+  },
+];
+
 const Router = () => {
-  const routes = useRoutes([
-    {
-      path: "/",
-      children: [
-        {
-          path: "/",
-          element: <Home />,
-        },
-        { path: "/home", element: <Home /> },
-        { path: "/BasicLayoutForm", element: <BasicLayoutForm /> },
-      ],
-    },
-  ]);
+  const routes = useRoutes(Routers);
 
   return routes;
 };

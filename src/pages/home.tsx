@@ -3,8 +3,14 @@ import React from "react";
 const Home = () => {
   return (
     <div>
-      home page
-      <a href="/#/BasicLayoutForm">BasicLayoutForm</a>
+      <ul>
+        <li>
+          <a href="/#/BasicLayoutForm">BasicLayoutForm</a>
+        </li>
+        <li>
+          <a href="/#/idSearch">idSearch</a>
+        </li>
+      </ul>
     </div>
   );
 };

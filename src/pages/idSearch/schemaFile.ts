@@ -7,42 +7,58 @@ const idSearchSchema = {
     },
 
     string1: {
-      label: "string",
+      label: "boolean",
+      type: "boolean",
+    },
+
+    rangeTime: {
+      label: "rangeTime",
       type: "string",
     },
 
-    string2: {
-      label: "string",
-      type: "string",
-    },
-
-    string3: {
-      label: "string",
+    textArea: {
+      label: "textArea",
       type: "string",
     },
 
     string4: {
       label: "string",
       type: "string",
+      colOption: {
+        span: 6,
+      },
     },
 
     string5: {
       label: "string",
       type: "string",
+      colOption: {
+        span: 6,
+      },
     },
 
     string6: {
       label: "string",
       type: "string",
+      colOption: {
+        span: 6,
+      },
     },
 
     string7: {
       label: "string",
       type: "string",
+      colOption: {
+        span: 6,
+      },
     },
   },
 };
 
-const idSearchUiSchema = {};
+const idSearchUiSchema = {
+  textArea: {
+    "ui:widget": "textarea",
+  },
+};
 
 export { idSearchSchema, idSearchUiSchema };

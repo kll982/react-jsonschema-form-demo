@@ -20,7 +20,7 @@ interface RjsfProps {
   widgets?: object;
   fields?: object;
   className?: string;
-  children?: HTMLElement;
+  children?: React.ReactNode;
   formData?: object;
   onSubmit?: (val: object) => void;
   onError?: (val: Array<object>) => void;
