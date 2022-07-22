@@ -20,12 +20,6 @@ import "../index.less";
 const ObjectFieldTemplate = (props: CustomizeFormProperties) => {
   return (
     <Row gutter={[8, 8]}>
-      <Col span={24} className="rjsf-title">
-        {props.title}
-      </Col>
-      <Col span={24} className="rjsf-description">
-        {props.description}
-      </Col>
       {isArray(props?.properties) &&
         props?.properties?.map((element, index) => {
           let content,

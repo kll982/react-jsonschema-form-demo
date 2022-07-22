@@ -1,5 +1,13 @@
 import ObjectFieldTemplate from "./ObjectFieldTemplate";
 import ArrayFieldTemplate from "./arrayFieldTemplate";
-import CustomFieldTemplate from "./customFieldTemplate";
+import {
+  CustomFieldTemplate,
+  CustomFieldLabelWidthTemplate,
+} from "./customFieldTemplate";
 
-export { ObjectFieldTemplate, ArrayFieldTemplate, CustomFieldTemplate };
+export {
+  ObjectFieldTemplate,
+  ArrayFieldTemplate,
+  CustomFieldTemplate,
+  CustomFieldLabelWidthTemplate,
+};

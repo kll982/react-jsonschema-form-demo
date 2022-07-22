@@ -61,4 +61,6 @@ export interface CustomField {
   errors?: string;
   children?: React.ReactNode;
   hidden?: boolean;
+  schema?: JSONSchema7;
+  uiSchema?: UiSchema;
 }

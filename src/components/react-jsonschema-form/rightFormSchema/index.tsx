@@ -8,7 +8,11 @@ import {
 } from "./utils";
 import _ from "lodash-contrib";
 import { RjsfProps } from "../interface";
-import { ObjectFieldTemplate, CustomFieldTemplate } from "../template";
+import {
+  ObjectFieldTemplate,
+  CustomFieldTemplate,
+  CustomFieldLabelWidthTemplate,
+} from "../template";
 import "../index.less";
 
 const RjsfFormComponent: React.FC<any> = RjsfForm as any;
@@ -61,8 +65,8 @@ export const BasicLayoutForm = (props: RjsfProps) => {
   return (
     <div className={`form ${className}`}>
       <RjsfFormComponent
-        ObjectFieldTemplate={ObjectFieldTemplate}
-        FieldTemplate={CustomFieldTemplate}
+        // ObjectFieldTemplate={ObjectFieldTemplate}
+        // FieldTemplate={CustomFieldLabelWidthTemplate}
         widgets={widgets}
         schema={schema}
         uiSchema={_uiSchema}
