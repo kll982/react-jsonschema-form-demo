@@ -19,10 +19,18 @@ import { exampleFields, exampleUiFields, fields } from "../typeFields";
 const defaultSchema = {
   type: "object",
   properties: {
+    string: {
+      label: "string",
+      type: "string",
+    },
+    text: {
+      label: "string",
+      type: "string",
+    },
     // nullSchema,
     // exampleFields,
     stringSchema,
-    dateSchema,
+    // dateSchema,
     // numberSchema,
     // integerSchema,
     // booleanSchema,

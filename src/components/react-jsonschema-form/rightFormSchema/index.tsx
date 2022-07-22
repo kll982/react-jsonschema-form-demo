@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Row, Col } from "antd";
+import React, { useState, useEffect, MouseEventHandler } from "react";
 import RjsfForm from "@rjsf/antd";
-import { ErrorBoundary, useErrorHandler } from "react-error-boundary";
 import {
   defaultWidgets,
   defaultFields,
@@ -9,67 +7,15 @@ import {
   defaultUiSchema,
 } from "./utils";
 import _ from "lodash-contrib";
-import { JSONSchema7, JSONSchema7Definition } from "json-schema";
-import { UiSchema } from "@rjsf/core";
+import { RjsfProps } from "../interface";
+import {
+  ObjectFieldTemplate,
+  CustomFieldTemplate,
+  CustomFieldLabelWidthTemplate,
+} from "../template";
 import "../index.less";
 
 const RjsfFormComponent: React.FC<any> = RjsfForm as any;
-
-export interface PropertyDetail {
-  content: {
-    props?: any;
-  };
-}
-export interface CustomizeFormProperties {
-  title: string;
-  description: string;
-  properties?: PropertyDetail[];
-}
-interface RjsfProps {
-  schema?: JSONSchema7;
-  uiSchema?: UiSchema;
-  widgets?: object;
-  fields?: object;
-  className?: string;
-  children?: React.ReactNode;
-  formData?: object;
-  onSubmit?: (val: object) => void;
-  onError?: (val: Array<object>) => void;
-}
-
-/**
- * @function Rendering of form
- * @description Reset the rendering of the form
- * @param
- * 
-   1. UiSchema[key].colOption , // Reference antd <Col>
-   2. schema[key].colOption , // Reference antd <Col>
-   1 > 2
- *
- * @version 0.1
- */
-
-const ObjectFieldTemplate = (props: CustomizeFormProperties) => {
-  return (
-    <Row gutter={[16, 16]}>
-      <Col span={24} style={{ color: "red" }}>
-        {props.title}
-      </Col>
-      <Col span={24}>{props.description}</Col>
-      {props?.properties &&
-        props?.properties?.map((element) => {
-          const colOption =
-            element?.content?.props?.uiSchema?.colOption ||
-            element?.content?.props?.schema?.colOption;
-          return (
-            <Col span={24} {...colOption}>
-              {element?.content}
-            </Col>
-          );
-        })}
-    </Row>
-  );
-};
 
 export const BasicLayoutForm = (props: RjsfProps) => {
   const {
@@ -86,7 +32,6 @@ export const BasicLayoutForm = (props: RjsfProps) => {
   } = props;
 
   const [_uiSchema, set_uiSchema] = useState(uiSchema);
-  const handleError = useErrorHandler();
 
   useEffect(() => {
     //  button[type="button"] ,Need to define  button htmlType
@@ -120,7 +65,8 @@ export const BasicLayoutForm = (props: RjsfProps) => {
   return (
     <div className={`form ${className}`}>
       <RjsfFormComponent
-        ObjectFieldTemplate={ObjectFieldTemplate}
+        // ObjectFieldTemplate={ObjectFieldTemplate}
+        // FieldTemplate={CustomFieldLabelWidthTemplate}
         widgets={widgets}
         schema={schema}
         uiSchema={_uiSchema}

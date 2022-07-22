@@ -53,7 +53,6 @@ const stringSchema = {
 };
 
 const stringUiSchema = {
-  "ui:rootFieldId": "string_Schema",
   text: {
     "ui:widget": "text",
   },
