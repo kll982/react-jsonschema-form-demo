@@ -5,10 +5,13 @@ const Home = () => {
     <div>
       <ul>
         <li>
-          <a href="/#/BasicLayoutForm">BasicLayoutForm</a>
+          <a href="/#/BasicLayoutForm">rjsf-form</a>
         </li>
         <li>
-          <a href="/#/idSearch">idSearch</a>
+          <a href="/#/idSearch">dnd idSearch</a>
+        </li>
+        <li>
+          <a href="/#/time-wheel">时间轮</a>
         </li>
       </ul>
     </div>
