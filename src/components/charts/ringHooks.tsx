@@ -12,9 +12,9 @@ weekDays.map((item: { children: any[] }) => weekday.push(...item.children));
 const dayHour: { name: any; value: number }[] = [];
 dayliys.map((item: { children: any[] }) => dayHour.push(...item.children));
 
-const Pie = () => {
-  let myChart: HTMLCanvasElement;
-  const sunburstCharts = useRef(null);
+const RingHooks = () => {
+  let myHooksChart: HTMLCanvasElement;
+  const ringHooksCharts = useRef(null);
   const [selectedArr, updateSelectedArr] = useState<number[][]>([]);
 
   const getOption = () => {
@@ -87,39 +87,34 @@ const Pie = () => {
 
   useEffect(() => {
     // 基于准备好的dom，初始化echarts实例
-    myChart = echarts.init(sunburstCharts.current) as HTMLCanvasElement;
+    myHooksChart = echarts.init(ringHooksCharts.current) as HTMLCanvasElement;
     const option = getOption();
     // 绘制图表
-    myChart.setOption(option);
+    myHooksChart.setOption(option);
 
-    myChart.on(
+    myHooksChart.on(
       "select",
       (params: { dataIndexInside: number; seriesIndex: number }) => {
         const { dataIndexInside, seriesIndex } = params;
-        console.log("charts select", params);
         dealSelecedItem({ dataIndexInside, seriesIndex });
         // const selectedSunburstCharts = selectedArr;
         // selectedSunburstCharts[seriesIndex] =
         //   selectedSunburstCharts[seriesIndex] || [];
         // selectedSunburstCharts[seriesIndex].push(dataIndexInside);
         // updateSelectedArr(selectedSunburstCharts);
-        // console.log("charts select", params, selectedSunburstCharts);
       }
     );
-    myChart.on("unselect", (params: any) => {
+    myHooksChart.on("unselect", (params: any) => {
       const { dataIndexInside, seriesIndex } = params;
-      console.log("charts unselect", params);
     });
-    // myChart.on("selectchanged", (params: any) => {
+    // myHooksChart.on("selectchanged", (params: any) => {
     //   const { selected } = params;
-    //   console.log("charts selectchanged", params);
     //   // dealSeleced(selected);
     // });
   }, []);
 
   useEffect(() => {
     if (selectedArr.length) {
-      console.log("charts selectedArr", selectedArr);
       selectFunc();
     }
   }, [selectedArr]);
@@ -151,7 +146,6 @@ const Pie = () => {
           break;
       }
     });
-    console.log("charts _selectedArr", _selectedArr);
     // updateSelectedArr(_selectedArr);
   };
 
@@ -185,7 +179,7 @@ const Pie = () => {
 
   const selectFunc = () => {
     selectedArr.map((item: number[], index: number) => {
-      myChart.dispatchAction({
+      myHooksChart.dispatchAction({
         type: "select",
         seriesIndex: index,
         dataIndex: item,
@@ -194,7 +188,7 @@ const Pie = () => {
   };
   const unSelectFunc = () => {
     selectedArr.map((item: number[], index: number) => {
-      myChart.dispatchAction({
+      myHooksChart.dispatchAction({
         type: "unselect",
         seriesIndex: index,
         dataIndex: item,
@@ -205,7 +199,7 @@ const Pie = () => {
 
   return (
     <div>
-      <div className="charts" ref={sunburstCharts} />
+      <div className="charts" ref={ringHooksCharts} />
 
       <button onClick={selectFunc}>select</button>
       <button onClick={unSelectFunc}>unselect</button>
@@ -213,4 +207,4 @@ const Pie = () => {
   );
 };
 
-export default Pie;
+export default RingHooks;

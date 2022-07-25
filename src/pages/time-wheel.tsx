@@ -17,9 +17,7 @@ export const TimeWheel = () => {
       <Col span={12}>
         <RingCharts2 />
       </Col>
-      <Col span={12}>
-        <RingHooks />
-      </Col>
+      <Col span={12}>{/* <RingHooks /> */}</Col>
       <Col span={12}>
         <SunburstCharts />
       </Col>
