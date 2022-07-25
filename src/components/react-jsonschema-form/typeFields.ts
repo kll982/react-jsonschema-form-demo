@@ -1,8 +1,9 @@
-import { ColorPicker, FileUpload } from "./widgets";
+import { ColorPicker, FileUpload, Textarea } from "./widgets";
 
 const fields = {
   ColorFields: ColorPicker,
   FileFields: FileUpload,
+  TextareaFields: Textarea,
 };
 
 // Example:
