@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { TextareaHTMLAttributes, useEffect, useState } from "react";
 import { Input } from "antd";
 
 const { TextArea } = Input;
-type Textvalue = string | number | readonly string[];
+export type Textvalue = TextareaHTMLAttributes<HTMLTextAreaElement>["value"];
 interface TextAreaProps {
   value: Textvalue;
   formData?: Textvalue;

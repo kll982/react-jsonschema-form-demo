@@ -13,8 +13,12 @@ import {
   arraySchema,
   arrayUiSchema,
   widgets,
-} from "../typeSchema";
-import { exampleFields, exampleUiFields, fields } from "../typeFields";
+} from "components/react-jsonschema-form/typeSchema";
+import {
+  exampleFields,
+  exampleUiFields,
+  fields,
+} from "components/react-jsonschema-form/typeFields";
 
 const defaultSchema = {
   type: "object",

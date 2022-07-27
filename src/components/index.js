@@ -1,5 +1,4 @@
 import * as Themes from "./theme";
-import { ThemesForm, BasicLayoutForm } from "./react-jsonschema-form";
 import {
   SunburstCharts,
   SunburstCharts2,
@@ -9,8 +8,6 @@ import {
 } from "./charts";
 
 export {
-  ThemesForm,
-  BasicLayoutForm,
   Themes,
   SunburstCharts,
   SunburstCharts2,

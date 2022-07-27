@@ -7,12 +7,12 @@ import {
   defaultUiSchema,
 } from "./utils";
 import _ from "lodash-contrib";
-import { RjsfProps } from "../interface";
+import { RjsfProps } from "components/react-jsonschema-form/interface";
 import {
   ObjectFieldTemplate,
   CustomFieldTemplate,
   CustomFieldLabelWidthTemplate,
-} from "../template";
+} from "components/react-jsonschema-form/template";
 import "../index.less";
 
 const RjsfFormComponent: React.FC<any> = RjsfForm as any;
@@ -27,8 +27,8 @@ export const BasicLayoutForm = (props: RjsfProps) => {
     children,
     formData = {},
     // objeoctFieldTemplate, // return JSX Element,可通过 "ui:ObjectFieldTemplate" 字段定义,此处暂不做处理
-    onSubmit = (val) => void val,
-    onError = (val) => void val,
+    onSubmit = (val: object) => void val,
+    onError = (val: Array<object>) => void val,
   } = props;
 
   const [_uiSchema, set_uiSchema] = useState(uiSchema);

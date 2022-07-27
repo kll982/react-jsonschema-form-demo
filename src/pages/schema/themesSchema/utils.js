@@ -1,4 +1,4 @@
-import { Themes } from "../../index";
+import { Themes } from "../../../components/index";
 
 const { IPAThemeVars, themes, getIPAThemes } = Themes;
 

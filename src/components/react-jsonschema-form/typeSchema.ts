@@ -1,4 +1,4 @@
-import { ColorPicker, FileUpload, Textarea } from "./widgets";
+import { ColorPicker, FileUpload, Textarea, SmartText } from "./widgets";
 const widgets = {
   ColorWidget: ColorPicker,
   FileWidget: FileUpload,

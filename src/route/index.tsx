@@ -14,7 +14,7 @@ import { useRoutes, RouteObject } from "react-router-dom";
 import Home from "src/pages/home";
 import { TimeWheel } from "src/pages/time-wheel";
 import { IdSearch } from "src/pages/idSearch";
-import { BasicLayoutForm } from "components";
+import { BasicLayoutForm } from "src/pages/schema/rightFormSchema";
 
 const Routers = [
   {

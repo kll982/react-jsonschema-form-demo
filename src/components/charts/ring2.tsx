@@ -37,6 +37,7 @@ export default class Pie extends Component {
     super(props);
     this.state = {
       selectedArr: [],
+      changeRender: true,
     };
   }
   async componentDidMount() {
@@ -45,8 +46,16 @@ export default class Pie extends Component {
     await this.chartSunburst.setOption(this.option);
 
     this.chartSunburst.on("selectchanged", (params: any) => {
-      const { selected } = params;
-      this.dealSeleced(selected);
+      const { selected, fromActionPayload } = params;
+      const { changeRender } = this.state;
+      console.log("params", params);
+      if (changeRender) {
+        this.dealSeleced(selected, fromActionPayload);
+      } else {
+        setTimeout(() => {
+          this.setState({ changeRender: true });
+        }, 500);
+      }
     });
   }
 
@@ -119,18 +128,14 @@ export default class Pie extends Component {
   };
 
   selectFunc = () => {
-    this.chartSunburst.dispatchAction({
-      type: "select",
-      seriesIndex: [0, 1],
-      dataIndex: [1, 5, 6],
-    });
-
     const { selectedArr } = this.state;
-    selectedArr.map((item: number[], index: number) => {
-      this.chartSunburst.dispatchAction({
-        type: "select",
-        seriesIndex: index,
-        dataIndex: item,
+    this.setState({ changeRender: false }, () => {
+      selectedArr.map((item: number[], index: number) => {
+        this.chartSunburst.dispatchAction({
+          type: "select",
+          seriesIndex: index,
+          dataIndex: item,
+        });
       });
     });
   };
@@ -147,40 +152,51 @@ export default class Pie extends Component {
     });
   };
 
+  weekDays = (dataIndex: number[], seriesArr: number[]) => {
+    if (dataIndex.some((index: number) => index === 0)) {
+      seriesArr.push(0, 1, 2, 3, 4);
+    }
+
+    if (dataIndex.some((index: number) => index === 1)) {
+      seriesArr.push(5, 6);
+    }
+    return seriesArr;
+  };
+
   dealSeleced = (
     selected: [
       {
         seriesIndex: number;
         dataIndex: number[];
       }
-    ]
+    ],
+    fromActionPayload: any
   ) => {
     const selectedArr: number[][] = [[], [], [], []];
+    const { type } = fromActionPayload; // select, unselect
     selected.map(({ seriesIndex, dataIndex }, index) => {
       selectedArr[seriesIndex] = dataIndex || [];
       switch (seriesIndex) {
         case 0:
-          if (dataIndex.some((index: number) => index === 0)) {
-            selectedArr[seriesIndex + 1].push(0, 1, 2, 3, 4);
-          }
-
-          if (dataIndex.some((index: number) => index === 1)) {
-            selectedArr[seriesIndex + 1].push(5, 6);
-          }
+          selectedArr[seriesIndex + 1] = this.weekDays(
+            dataIndex,
+            selectedArr[seriesIndex + 1]
+          );
           break;
         default:
           break;
       }
+      console.log(seriesIndex, selectedArr[seriesIndex]);
     });
-    console.log("charts", selectedArr);
-    // this.setState(
-    //   {
-    //     selectedArr,
-    //   },
-    //   () => {
-    //     this.selectFunc();
-    //   }
-    // );
+    console.log("charts", selectedArr[1]);
+    this.setState(
+      {
+        selectedArr,
+      },
+      () => {
+        this.selectFunc();
+      }
+    );
     return selectedArr;
   };
 

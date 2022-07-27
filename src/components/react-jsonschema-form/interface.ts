@@ -1,10 +1,6 @@
 import { UiSchema } from "@rjsf/core";
 import { JSONSchema7 } from "json-schema";
-import {
-  ButtonHTMLAttributes,
-  DetailedHTMLProps,
-  MouseEventHandler,
-} from "react";
+import { MouseEventHandler } from "react";
 
 export interface RjsfProps {
   schema?: JSONSchema7;

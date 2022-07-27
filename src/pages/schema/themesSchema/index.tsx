@@ -5,7 +5,7 @@ import RjsfForm from "@rjsf/antd";
 // import { Theme as AntDTheme } from "@rjsf/antd";
 
 import { schema, uiSchema } from "./utils";
-import { ColorPicker } from "../widgets";
+import { ColorPicker } from "../../../components/react-jsonschema-form/widgets";
 import { JSONSchema7 } from "json-schema";
 import { UiSchema } from "@rjsf/core";
 import "../index.less";
