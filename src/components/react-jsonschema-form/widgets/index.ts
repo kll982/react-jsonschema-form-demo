@@ -3,7 +3,6 @@ import DateTimePicker from "./DateTimePicker/dateTime";
 import RangeDateTimePicker from "./DateTimePicker/rangeDateTime";
 import FileUpload from "./FileUpload";
 import Textarea from "./textarea";
-import SmartText from "./smartText";
 
 export {
   ColorPicker,
@@ -11,5 +10,4 @@ export {
   RangeDateTimePicker,
   FileUpload,
   Textarea,
-  SmartText,
 };

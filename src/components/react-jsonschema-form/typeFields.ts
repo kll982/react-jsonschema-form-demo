@@ -1,12 +1,13 @@
 import { ColorPicker, FileUpload, Textarea } from "./widgets";
-import { GeoPosition, GeoHooksPosition } from "./fields";
+import { GeoPosition, GeoHooksPosition, SmartText } from "./fields";
 
 const fields = {
-  ColorFields: ColorPicker,
-  FileFields: FileUpload,
-  TextareaFields: Textarea,
+  color: ColorPicker,
+  file: FileUpload,
+  textArea: Textarea,
   geo: GeoPosition,
   geoHooks: GeoHooksPosition,
+  smartText: SmartText,
 };
 
 // Example:
@@ -26,10 +27,10 @@ const exampleFields = {
 
 const exampleUiFields = {
   color: {
-    "ui:field": fields.ColorFields,
+    "ui:field": "color",
   },
   file: {
-    "ui:field": fields.FileFields,
+    "ui:field": fields.file,
     "ui:option": { accept: ".png" },
   },
 };

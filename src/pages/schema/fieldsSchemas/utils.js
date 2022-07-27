@@ -13,8 +13,6 @@ const smartTextSchema = {
   },
 };
 
-const field = { ...fields, smartText: smartTextSchema };
-
 const defaultSchema = {
   type: "object",
   properties: {
@@ -35,7 +33,11 @@ const defaultSchema = {
       title: "经纬度",
       type: "object",
     },
-    smartText: smartTextSchema,
+    smartText: {
+      title: "smartText",
+      type: "object",
+    },
+    smartTextSchema: smartTextSchema,
   },
 };
 
@@ -48,7 +50,7 @@ const defaultUiSchema = {
     "ui:option": { accept: ".png" },
   },
   textarea: {
-    "ui:field": "textarea",
+    "ui:field": "textArea",
   },
   geo: {
     "ui:field": "geo",
@@ -56,15 +58,14 @@ const defaultUiSchema = {
   geoHook: {
     "ui:field": "geoHooks",
   },
-  // smartText: {
-  //   "ui:field": "smartText",
-  // },
-  // smartText: {
-  //   // "ui:widget": smartTextSchema,
-  //   textarea: {
-  //     "ui:widget": "textarea",
-  //   },
-  // },
+  smartText: {
+    "ui:field": "smartText",
+  },
+  smartTextSchema: {
+    textarea: {
+      "ui:field": "textArea",
+    },
+  },
 };
 
 export { defaultSchema, defaultUiSchema };
