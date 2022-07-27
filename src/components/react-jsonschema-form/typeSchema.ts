@@ -3,6 +3,7 @@ const widgets = {
   ColorWidget: ColorPicker,
   FileWidget: FileUpload,
   TextareaWidget: Textarea,
+  SmartTextWeight: SmartText,
 };
 
 // Example:

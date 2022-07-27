@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Layout } from "antd";
+import { Layout, Space } from "antd";
 import { createRoot } from "react-dom/client";
 import { HashRouter } from "react-router-dom";
 import { Router as RouteTable } from "./route";
 import LeftMenu from "./route/leftMeun";
+import { HeatMapOutlined } from "@ant-design/icons";
 import "./App.less";
 
 import "./mock/mock";
@@ -21,6 +22,12 @@ const App = () => {
             collapsed={collapsed}
             onCollapse={(value) => setCollapsed(value)}
           >
+            <h3 className="demoApp-app-title">
+              <Space>
+                <HeatMapOutlined />
+                <span>demoApp</span>
+              </Space>
+            </h3>
             <LeftMenu />
           </Sider>
           <Layout className="demoApp-site-layout">

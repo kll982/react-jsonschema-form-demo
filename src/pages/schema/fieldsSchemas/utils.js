@@ -1,4 +1,3 @@
-import { widgets } from "components/react-jsonschema-form/typeSchema";
 import { fields } from "components/react-jsonschema-form/typeFields";
 
 const smartTextSchema = {
@@ -32,23 +31,30 @@ const defaultSchema = {
       title: "经纬度",
       type: "object",
     },
+    geoHook: {
+      title: "经纬度",
+      type: "object",
+    },
     smartText: smartTextSchema,
   },
 };
 
 const defaultUiSchema = {
   color: {
-    "ui:widget": "color",
+    "ui:field": "color",
   },
   file: {
-    "ui:widget": "file",
+    "ui:field": "file",
     "ui:option": { accept: ".png" },
   },
   textarea: {
-    "ui:widget": "textarea",
+    "ui:field": "textarea",
   },
   geo: {
     "ui:field": "geo",
+  },
+  geoHook: {
+    "ui:field": "geoHooks",
   },
   // smartText: {
   //   "ui:field": "smartText",
@@ -60,11 +66,5 @@ const defaultUiSchema = {
   //   },
   // },
 };
-console.log("field", field);
 
-export {
-  widgets as defaultWidgets,
-  field as defaultFields,
-  defaultSchema,
-  defaultUiSchema,
-};
+export { defaultSchema, defaultUiSchema };

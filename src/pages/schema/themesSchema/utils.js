@@ -89,4 +89,4 @@ const uiSchema = formUiSchema();
 //   },
 // };
 
-export { schema, uiSchema };
+export { schema as defaultSchema, uiSchema as defaultUiSchema };

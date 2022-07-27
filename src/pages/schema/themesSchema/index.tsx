@@ -1,69 +1,20 @@
-import React, { useRef } from "react";
-import { Button } from "antd";
-// import { withTheme } from "@rjsf/core";
-import RjsfForm from "@rjsf/antd";
-// import { Theme as AntDTheme } from "@rjsf/antd";
+import React from "react";
+import { defaultSchema, defaultUiSchema } from "./utils";
+import { SchemaForm } from "../index";
 
-import { schema, uiSchema } from "./utils";
-import { ColorPicker } from "../../../components/react-jsonschema-form/widgets";
-import { JSONSchema7 } from "json-schema";
-import { UiSchema } from "@rjsf/core";
-import "../index.less";
+export const ThemesForm = () => {
+  const onFormSubmit = (formData: object) => {};
+  const onFormChange = (formData: object) => {};
 
-// const RjsfForm = withTheme(AntDTheme);
-
-const RjsfFormComponent: React.FC<any> = RjsfForm as any;
-
-interface RjsfProps {
-  schema?: JSONSchema7;
-  uiSchema?: UiSchema;
-  widgets?: object;
-  fields?: object;
-  className?: string;
-  children?: React.ReactNode;
-  formData?: object;
-  onSubmit?: (val: object) => void;
-  onError?: (val: Array<object>) => void;
-}
-
-const ThemesForm = (props: RjsfProps) => {
-  const { onSubmit = (val) => void val, onError = (val) => void val } = props;
-  // 覆盖原来的 组件
-  const widgets = {
-    ColorWidget: ColorPicker,
-  };
-
-  const onFormSubmit = ({ formData }: { formData: object }) => {
-    onSubmit(formData);
-  };
-
-  const onFormError = (errors: Array<object>) => {
-    onError(errors);
-  };
+  const onFormError = (errors: Array<object>) => {};
 
   return (
-    <div className={"form"}>
-      <RjsfFormComponent
-        schema={schema}
-        uiSchema={uiSchema}
-        widgets={widgets}
-        onSubmit={onFormSubmit}
-        onError={onFormError}
-      >
-        <div>
-          <Button
-            htmlType="submit"
-            style={{
-              position: "fixed",
-              bottom: "60px",
-            }}
-          >
-            保存当前配置
-          </Button>
-        </div>
-      </RjsfFormComponent>
-    </div>
+    <SchemaForm
+      schema={defaultSchema}
+      uiSchema={defaultUiSchema}
+      onSubmit={onFormSubmit}
+      onError={onFormError}
+      onChange={onFormChange}
+    ></SchemaForm>
   );
 };
-
-export { ThemesForm };

@@ -14,7 +14,8 @@ const LeftMenu = () => {
       label: "rjsf-form",
       key: "/rjsf-form",
       children: [
-        { key: "/rjsf-form/widght", label: "widght" },
+        { key: "/rjsf-form/widget", label: "widget" },
+        { key: "/rjsf-form/field", label: "field" },
         { key: "/rjsf-form/BasicLayoutForm", label: "form" },
         { key: "/rjsf-form/ThemeForm", label: "颜色配置" },
       ],

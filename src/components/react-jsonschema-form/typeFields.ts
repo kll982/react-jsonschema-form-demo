@@ -1,9 +1,12 @@
 import { ColorPicker, FileUpload, Textarea } from "./widgets";
+import { GeoPosition, GeoHooksPosition } from "./fields";
 
 const fields = {
   ColorFields: ColorPicker,
   FileFields: FileUpload,
   TextareaFields: Textarea,
+  geo: GeoPosition,
+  geoHooks: GeoHooksPosition,
 };
 
 // Example:

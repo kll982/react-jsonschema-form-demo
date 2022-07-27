@@ -1,4 +1,5 @@
 import * as Themes from "./theme";
+import { RenderRjsfForm } from "./react-jsonschema-form";
 import {
   SunburstCharts,
   SunburstCharts2,
@@ -14,5 +15,6 @@ export {
   RingCharts,
   RingCharts2,
   RingHooks,
+  RenderRjsfForm,
 };
 export * from "./theme";

@@ -57,9 +57,4 @@ const defaultUiSchema = {
   },
 };
 
-export {
-  widgets as defaultWidgets,
-  fields as defaultFields,
-  defaultSchema,
-  defaultUiSchema,
-};
+export { defaultSchema, defaultUiSchema };
