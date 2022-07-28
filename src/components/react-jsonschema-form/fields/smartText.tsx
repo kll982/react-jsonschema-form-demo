@@ -1,7 +1,7 @@
 import React, { TextareaHTMLAttributes, useEffect, useState } from "react";
-import { Checkbox, Input } from "antd";
+import { Row, Col, Checkbox } from "antd";
+import { Textarea as TextareaWidget } from "../widgets";
 
-const { TextArea } = Input;
 type Textvalue = TextareaHTMLAttributes<HTMLTextAreaElement>["value"];
 interface TextAreaProps {
   formData: {
@@ -13,28 +13,29 @@ interface TextAreaProps {
 
 const SmartText = (props: TextAreaProps) => {
   const { formData, onChange } = props;
-  const [text, setText] = useState<Textvalue>(formData.text);
-  const [check, setCheck] = useState<boolean>(formData.check);
-
-  useEffect(() => {
-    onChange && onChange({ text, check });
-  }, [text, check]);
 
   return (
-    <>
-      <Checkbox value={check} onChange={(e) => setCheck(e.target.checked)}>
-        Quick search from nodes
-      </Checkbox>
-      <TextArea
-        value={text}
-        allowClear
-        autoSize={{ minRows: 5 }}
-        onChange={(e) => {
-          setText(e.target.value);
-        }}
-        style={{ width: "100%", maxHeight: 180, overflow: "auto" }}
-      />
-    </>
+    <Row>
+      <Col span={24}>
+        <Checkbox
+          checked={formData.check}
+          onChange={(e) => {
+            const { checked } = e.target;
+            onChange && onChange({ ...formData, check: checked });
+          }}
+        >
+          Quick search from nodes
+        </Checkbox>
+      </Col>
+      <Col span={24}>
+        <TextareaWidget
+          value={formData.text}
+          onChange={(value) => {
+            onChange && onChange({ ...formData, text: value });
+          }}
+        />
+      </Col>
+    </Row>
   );
 };
 

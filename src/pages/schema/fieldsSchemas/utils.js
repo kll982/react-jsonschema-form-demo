@@ -1,18 +1,3 @@
-import { fields } from "components/react-jsonschema-form/typeFields";
-
-const smartTextSchema = {
-  type: "object",
-  properties: {
-    nodes: {
-      title: "Quick search from nodes",
-      type: "boolean",
-    },
-    textarea: {
-      type: "string",
-    },
-  },
-};
-
 const defaultSchema = {
   type: "object",
   properties: {
@@ -37,7 +22,6 @@ const defaultSchema = {
       title: "smartText",
       type: "object",
     },
-    smartTextSchema: smartTextSchema,
   },
 };
 
