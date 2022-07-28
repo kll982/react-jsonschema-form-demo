@@ -3,7 +3,7 @@ import * as echarts from "echarts/lib/echarts";
 import "echarts/lib/chart/sunburst";
 import "echarts/lib/component/tooltip";
 import "echarts/lib/component/title";
-import { weekDays, dayliys } from "@/mock/sunburst-data";
+import { weekDays, dayliys, relationshipArr } from "@/mock/sunburst-data";
 import { defaultPieOption } from "./utils";
 
 const weekday: { name: any; value: number }[] = [];
@@ -12,21 +12,9 @@ weekDays.map((item: { children: any[] }) => weekday.push(...item.children));
 const dayHour: { name: any; value: number }[] = [];
 dayliys.map((item: { children: any[] }) => dayHour.push(...item.children));
 
-const relationshipArr = [
-  [
-    [0, 1, 2, 3, 4],
-    [5, 6],
-  ],
-  [],
-  [
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-    [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
-  ],
-];
 // 俩个数组的差集,数组1-数组2
-const differenceArr = (arr1: any[], arr2: any[]) => {
-  return arr1.filter((item) => !arr2.includes(item));
-};
+const differenceArr = (arr1: any[], arr2: any[]) =>
+  arr1.filter((item) => !arr2.includes(item));
 
 export default class Pie extends Component {
   chartSunburst: any;
@@ -52,10 +40,10 @@ export default class Pie extends Component {
   constructor(props: {} | Readonly<{}>) {
     super(props);
     this.state = {
-      selectedArr: [],
       changeRender: true,
     };
   }
+
   async componentDidMount() {
     this.chartSunburst = echarts.init(this.sunburstCharts) as HTMLCanvasElement;
     this.option = this.getOption();
@@ -67,9 +55,7 @@ export default class Pie extends Component {
       if (changeRender) {
         this.dealSeleced(selected, fromActionPayload);
       } else {
-        setTimeout(() => {
-          this.setState({ changeRender: true });
-        }, 200);
+        console.log("selected", selected);
       }
     });
   }
@@ -142,29 +128,24 @@ export default class Pie extends Component {
     return option;
   };
 
-  selectFunc = () => {
-    const { selectedArr } = this.state;
+  selectFunc = (selectedArr: number[][]) => {
     this.setState({ changeRender: false }, () => {
       selectedArr.map((item: number[], index: number) => {
-        this.chartSunburst.dispatchAction({
-          type: "select",
-          seriesIndex: index,
-          dataIndex: item,
-        });
+        if (item.length > 0) {
+          this.chartSunburst.dispatchAction({
+            type: "select",
+            seriesIndex: index,
+            dataIndex: item,
+          });
+        }
       });
       this.setState({ changeRender: true });
     });
   };
 
-  // TODO: 数据处理有问题
-  unSelectFunc = (unSelectedArr: number[][] = this.state?.selectedArr) => {
-    // const filterSelectedArr = [...this.state.selectedArr];
+  unSelectFunc = (unSelectedArr: number[][]) => {
     this.setState({ changeRender: false }, () => {
       unSelectedArr.map((item: number[], index: number) => {
-        // filterSelectedArr[index] = differenceArr(
-        //   filterSelectedArr[index],
-        //   item
-        // );
         this.chartSunburst.dispatchAction({
           type: "unselect",
           seriesIndex: index,
@@ -174,12 +155,6 @@ export default class Pie extends Component {
       this.setState({ changeRender: true });
     });
   };
-
-  parentSelect = (
-    seriesIndex: number,
-    dataIndex: number,
-    seriesArr: number[]
-  ) => seriesArr.push(...relationshipArr[seriesIndex][dataIndex]);
 
   dealSeleced = (
     selected: [
@@ -198,9 +173,8 @@ export default class Pie extends Component {
     // seriesIndex 层级
     // dataIndexInside 索引
     const { type, seriesIndex, dataIndexInside } = fromActionPayload; // select, unselect
-
-    const activeArr: number[][] =
-      type === "select" ? selectedArr : unSelectedArr;
+    const select = type === "select";
+    const activeArr: number[][] = select ? selectedArr : unSelectedArr;
     switch (seriesIndex) {
       case 0:
       case 2:
@@ -210,47 +184,32 @@ export default class Pie extends Component {
         break;
       case 1:
       case 3:
-        const aa = relationshipArr[seriesIndex - 1].map((item, index) => {
-          if (differenceArr(item, activeArr[seriesIndex]).length === 0) {
+        relationshipArr[seriesIndex - 1].map((item, index) => {
+          const len = differenceArr(item, activeArr[seriesIndex]).length;
+          if ((len === 0 && select) || (len > 0 && !select)) {
             activeArr[seriesIndex - 1].push(index);
-          } else {
-            activeArr[seriesIndex - 1] = activeArr[seriesIndex - 1].filter(
-              (item) => item !== index
-            );
           }
-          return differenceArr(item, activeArr[seriesIndex]);
+          return len;
         });
         // map 数据,取relationshipArr[seriesIndex-1] 与 activeArr[seriesIndex] 差值,如果为空数组, activeArr[seriesIndex-1] push relationshipArr[seriesIndex-1] 的索引
         break;
       default:
         break;
     }
-    this.setState(
-      {
-        selectedArr: activeArr,
-      },
-      () => {
-        if (type === "select") {
-          this.selectFunc();
-        } else if (type === "unselect") {
-          this.unSelectFunc(activeArr);
-        }
-      }
-    );
-    return selectedArr;
+
+    if (select) {
+      this.selectFunc(activeArr);
+    } else if (type === "unselect") {
+      this.unSelectFunc(activeArr);
+    }
   };
 
   render() {
     return (
-      <div>
-        <div
-          className="charts"
-          ref={(e) => (this.sunburstCharts = e as HTMLElement)}
-        />
-
-        <button onClick={this.selectFunc}>select</button>
-        <button onClick={this.unSelectFunc}>unselect</button>
-      </div>
+      <div
+        className="charts"
+        ref={(e) => (this.sunburstCharts = e as HTMLElement)}
+      />
     );
   }
 }
