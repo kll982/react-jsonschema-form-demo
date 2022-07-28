@@ -23,6 +23,10 @@ const relationshipArr = [
     [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
   ],
 ];
+// 俩个数组的差集,数组1-数组2
+const differenceArr = (arr1: any[], arr2: any[]) => {
+  return arr1.filter((item) => !arr2.includes(item));
+};
 
 export default class Pie extends Component {
   chartSunburst: any;
@@ -148,22 +152,26 @@ export default class Pie extends Component {
           dataIndex: item,
         });
       });
+      this.setState({ changeRender: true });
     });
   };
 
+  // TODO: 数据处理有问题
   unSelectFunc = (unSelectedArr: number[][] = this.state?.selectedArr) => {
-    const filterSelectedArr = [...this.state.selectedArr];
+    // const filterSelectedArr = [...this.state.selectedArr];
     this.setState({ changeRender: false }, () => {
       unSelectedArr.map((item: number[], index: number) => {
-        filterSelectedArr[index] = filterSelectedArr[index].filter(
-          (it: number) => !item.includes(it)
-        );
+        // filterSelectedArr[index] = differenceArr(
+        //   filterSelectedArr[index],
+        //   item
+        // );
         this.chartSunburst.dispatchAction({
           type: "unselect",
           seriesIndex: index,
           dataIndex: item,
         });
       });
+      this.setState({ changeRender: true });
     });
   };
 
@@ -171,11 +179,7 @@ export default class Pie extends Component {
     seriesIndex: number,
     dataIndex: number,
     seriesArr: number[]
-  ) => {
-    seriesArr.push(...relationshipArr[seriesIndex][dataIndex]);
-
-    return seriesArr;
-  };
+  ) => seriesArr.push(...relationshipArr[seriesIndex][dataIndex]);
 
   dealSeleced = (
     selected: [
@@ -203,6 +207,20 @@ export default class Pie extends Component {
         activeArr[seriesIndex + 1].push(
           ...relationshipArr[seriesIndex][dataIndexInside]
         );
+        break;
+      case 1:
+      case 3:
+        const aa = relationshipArr[seriesIndex - 1].map((item, index) => {
+          if (differenceArr(item, activeArr[seriesIndex]).length === 0) {
+            activeArr[seriesIndex - 1].push(index);
+          } else {
+            activeArr[seriesIndex - 1] = activeArr[seriesIndex - 1].filter(
+              (item) => item !== index
+            );
+          }
+          return differenceArr(item, activeArr[seriesIndex]);
+        });
+        // map 数据,取relationshipArr[seriesIndex-1] 与 activeArr[seriesIndex] 差值,如果为空数组, activeArr[seriesIndex-1] push relationshipArr[seriesIndex-1] 的索引
         break;
       default:
         break;
