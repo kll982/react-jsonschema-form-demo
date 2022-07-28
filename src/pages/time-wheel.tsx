@@ -11,19 +11,21 @@ import {
 export const TimeWheel = () => {
   return (
     <Row gutter={[20, 8]}>
-      <Col span={12}>
+      {/* <Col span={12}>
         <RingCharts />
-      </Col>
+      </Col> */}
       <Col span={12}>
         <RingCharts2 />
       </Col>
-      <Col span={12}>{/* <RingHooks /> */}</Col>
+      {/* <Col span={12}>
+        <RingHooks />
+      </Col>
       <Col span={12}>
         <SunburstCharts />
       </Col>
       <Col span={12}>
         <SunburstCharts2 />
-      </Col>
+      </Col> */}
     </Row>
   );
 };
