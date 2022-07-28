@@ -12,6 +12,18 @@ weekDays.map((item: { children: any[] }) => weekday.push(...item.children));
 const dayHour: { name: any; value: number }[] = [];
 dayliys.map((item: { children: any[] }) => dayHour.push(...item.children));
 
+const relationshipArr = [
+  [
+    [0, 1, 2, 3, 4],
+    [5, 6],
+  ],
+  [],
+  [
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+  ],
+];
+
 export default class Pie extends Component {
   chartSunburst: any;
   option: {
@@ -48,13 +60,12 @@ export default class Pie extends Component {
     this.chartSunburst.on("selectchanged", (params: any) => {
       const { selected, fromActionPayload } = params;
       const { changeRender } = this.state;
-      console.log("params", params);
       if (changeRender) {
         this.dealSeleced(selected, fromActionPayload);
       } else {
         setTimeout(() => {
           this.setState({ changeRender: true });
-        }, 500);
+        }, 200);
       }
     });
   }
@@ -140,26 +151,29 @@ export default class Pie extends Component {
     });
   };
 
-  unSelectFunc = () => {
-    const { selectedArr } = this.state;
-    console.log("charts selectedArr", selectedArr, this.chartSunburst);
-    selectedArr.map((item: number[], index: number) => {
-      this.chartSunburst.dispatchAction({
-        type: "unselect",
-        seriesIndex: index,
-        dataIndex: item,
+  unSelectFunc = (unSelectedArr: number[][] = this.state?.selectedArr) => {
+    const filterSelectedArr = [...this.state.selectedArr];
+    this.setState({ changeRender: false }, () => {
+      unSelectedArr.map((item: number[], index: number) => {
+        filterSelectedArr[index] = filterSelectedArr[index].filter(
+          (it: number) => !item.includes(it)
+        );
+        this.chartSunburst.dispatchAction({
+          type: "unselect",
+          seriesIndex: index,
+          dataIndex: item,
+        });
       });
     });
   };
 
-  weekDays = (dataIndex: number[], seriesArr: number[]) => {
-    if (dataIndex.some((index: number) => index === 0)) {
-      seriesArr.push(0, 1, 2, 3, 4);
-    }
+  parentSelect = (
+    seriesIndex: number,
+    dataIndex: number,
+    seriesArr: number[]
+  ) => {
+    seriesArr.push(...relationshipArr[seriesIndex][dataIndex]);
 
-    if (dataIndex.some((index: number) => index === 1)) {
-      seriesArr.push(5, 6);
-    }
     return seriesArr;
   };
 
@@ -173,28 +187,36 @@ export default class Pie extends Component {
     fromActionPayload: any
   ) => {
     const selectedArr: number[][] = [[], [], [], []];
-    const { type } = fromActionPayload; // select, unselect
-    selected.map(({ seriesIndex, dataIndex }, index) => {
+    const unSelectedArr: number[][] = [[], [], [], []];
+    selected.map(({ seriesIndex, dataIndex }) => {
       selectedArr[seriesIndex] = dataIndex || [];
-      switch (seriesIndex) {
-        case 0:
-          selectedArr[seriesIndex + 1] = this.weekDays(
-            dataIndex,
-            selectedArr[seriesIndex + 1]
-          );
-          break;
-        default:
-          break;
-      }
-      console.log(seriesIndex, selectedArr[seriesIndex]);
     });
-    console.log("charts", selectedArr[1]);
+    // seriesIndex 层级
+    // dataIndexInside 索引
+    const { type, seriesIndex, dataIndexInside } = fromActionPayload; // select, unselect
+
+    const activeArr: number[][] =
+      type === "select" ? selectedArr : unSelectedArr;
+    switch (seriesIndex) {
+      case 0:
+      case 2:
+        activeArr[seriesIndex + 1].push(
+          ...relationshipArr[seriesIndex][dataIndexInside]
+        );
+        break;
+      default:
+        break;
+    }
     this.setState(
       {
-        selectedArr,
+        selectedArr: activeArr,
       },
       () => {
-        this.selectFunc();
+        if (type === "select") {
+          this.selectFunc();
+        } else if (type === "unselect") {
+          this.unSelectFunc(activeArr);
+        }
       }
     );
     return selectedArr;
