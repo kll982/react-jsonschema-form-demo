@@ -51,4 +51,8 @@ const onionSeries = {
   highlightPolicy: "descendant", // 高亮是圆环显示形式
 };
 
-export { defaultPieOption, itemStyle, label, onionSeries };
+// 俩个数组的差集,数组1-数组2
+const differenceArr = (arr1: any[], arr2: any[]) =>
+  arr1.filter((item) => !arr2.includes(item));
+
+export { defaultPieOption, itemStyle, label, onionSeries, differenceArr };

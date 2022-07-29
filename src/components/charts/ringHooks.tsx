@@ -4,7 +4,9 @@ import "echarts/lib/chart/sunburst";
 import "echarts/lib/component/tooltip";
 import "echarts/lib/component/title";
 import { weekDays, dayliys } from "@/mock/sunburst-data";
-import { defaultPieOption } from "./utils";
+import { defaultPieOption, differenceArr } from "./utils";
+import { PieOption } from "./interface";
+import { relationshipArr } from "../../mock/sunburst-data";
 
 const weekday: { name: any; value: number }[] = [];
 weekDays.map((item: { children: any[] }) => weekday.push(...item.children));
@@ -16,12 +18,13 @@ const RingHooks = () => {
   let myHooksChart: HTMLCanvasElement;
   const ringHooksCharts = useRef(null);
   const [selectedArr, updateSelectedArr] = useState<number[][]>([]);
+  const [changeRender, updateChangeRender] = useState<boolean>(true);
 
   const getOption = () => {
     const { series, backgroundColor } = defaultPieOption;
     const { itemStyle } = series;
     let option = {
-      title: { text: "环形图 Hooks  echarts" },
+      title: { text: "环形图 Hooks  echarts", subtext: "hooks 会陷入死循环" },
       backgroundColor,
       series: [
         {
@@ -93,61 +96,57 @@ const RingHooks = () => {
     myHooksChart.setOption(option);
 
     myHooksChart.on(
-      "select",
-      (params: { dataIndexInside: number; seriesIndex: number }) => {
-        const { dataIndexInside, seriesIndex } = params;
-        dealSelecedItem({ dataIndexInside, seriesIndex });
-        // const selectedSunburstCharts = selectedArr;
-        // selectedSunburstCharts[seriesIndex] =
-        //   selectedSunburstCharts[seriesIndex] || [];
-        // selectedSunburstCharts[seriesIndex].push(dataIndexInside);
-        // updateSelectedArr(selectedSunburstCharts);
+      "selectchanged",
+      (params: { selected: any; fromActionPayload: any }) => {
+        const { selected, fromActionPayload } = params;
+        if (changeRender) {
+          try {
+            updateChangeRender(false);
+          } catch (e) {
+          } finally {
+            // dealSeleced(selected, fromActionPayload);
+          }
+        }
       }
     );
-    myHooksChart.on("unselect", (params: any) => {
-      const { dataIndexInside, seriesIndex } = params;
-    });
-    // myHooksChart.on("selectchanged", (params: any) => {
-    //   const { selected } = params;
-    //   // dealSeleced(selected);
-    // });
   }, []);
 
-  useEffect(() => {
-    if (selectedArr.length) {
-      selectFunc();
-    }
-  }, [selectedArr]);
-
-  const dealSelecedItem = ({
-    dataIndexInside,
-    seriesIndex,
-  }: {
-    seriesIndex: number;
-    dataIndexInside: number;
-  }) => {
-    const _selectedArr: number[][] = [[], [], [], []];
-    _selectedArr.map((item, index) => {
-      _selectedArr[index] = selectedArr[index] || [];
-      if (seriesIndex === index) {
-        _selectedArr[index].push(dataIndexInside);
-      }
-      switch (seriesIndex) {
-        case 0:
-          // if (dataIndex.some((index: number) => index === 0)) {
-          //   _selectedArr[seriesIndex + 1].push(0, 1, 2, 3, 4);
-          // }
-
-          // if (dataIndex.some((index: number) => index === 1)) {
-          //   _selectedArr[seriesIndex + 1].push(5, 6);
-          // }
-          break;
-        default:
-          break;
+  const selectFunc = (selectedArr: number[][]) => {
+    selectedArr.map((item: number[], index: number) => {
+      if (item.length > 0) {
+        myHooksChart.dispatchAction({
+          type: "select",
+          seriesIndex: index,
+          dataIndex: item,
+        });
       }
     });
-    // updateSelectedArr(_selectedArr);
+    updateSelectedArr(selectedArr);
   };
+
+  const unSelectFunc = (unSelectedArr: number[][]) => {
+    let newSelectedArr: number[][] = [[], [], [], []];
+    unSelectedArr.map((item: number[], index: number) => {
+      if (item.length > 0) {
+        newSelectedArr[index] = differenceArr(selectedArr[index], item);
+        myHooksChart.dispatchAction({
+          type: "unselect",
+          seriesIndex: index,
+          dataIndex: item,
+        });
+      }
+    });
+    updateSelectedArr(newSelectedArr);
+  };
+  useEffect(() => {
+    // updateChangeRender(true);
+    console.log("changeRender", changeRender);
+  }, [changeRender]);
+
+  useEffect(() => {
+    // updateChangeRender(true);
+    console.log("change事件 selectedArr", selectedArr);
+  }, [selectedArr]);
 
   const dealSeleced = (
     selected: [
@@ -155,56 +154,51 @@ const RingHooks = () => {
         seriesIndex: number;
         dataIndex: number[];
       }
-    ]
+    ],
+    fromActionPayload: any
   ) => {
     const _selectedArr: number[][] = [[], [], [], []];
+    const unSelectedArr: number[][] = [[], [], [], []];
     selected.map(({ seriesIndex, dataIndex }) => {
       _selectedArr[seriesIndex] = dataIndex || [];
-      switch (seriesIndex) {
-        case 0:
-          if (dataIndex.some((index: number) => index === 0)) {
-            _selectedArr[seriesIndex + 1].push(0, 1, 2, 3, 4);
+    });
+    // seriesIndex 层级
+    // dataIndexInside 索引
+    const { type, seriesIndex, dataIndexInside } = fromActionPayload; // select, unselect
+    const select = type === "select";
+    const activeArr: number[][] = select ? _selectedArr : unSelectedArr;
+    switch (seriesIndex) {
+      case 0:
+      case 2:
+        const seriesNextIndexArr =
+          relationshipArr[seriesIndex][dataIndexInside] || [];
+        activeArr[seriesIndex + 1].push(...seriesNextIndexArr);
+        break;
+      case 1:
+      case 3:
+        relationshipArr[seriesIndex - 1].map(
+          (item: number[], index: number) => {
+            const len = differenceArr(item, activeArr[seriesIndex]).length;
+            if ((len === 0 && select) || (len > 0 && !select)) {
+              activeArr[seriesIndex - 1].push(index);
+            }
+            return len;
           }
+        );
+        // map 数据,取relationshipArr[seriesIndex-1] 与 activeArr[seriesIndex] 差值,如果为空数组, activeArr[seriesIndex-1] push relationshipArr[seriesIndex-1] 的索引
+        break;
+      default:
+        break;
+    }
 
-          if (dataIndex.some((index: number) => index === 1)) {
-            _selectedArr[seriesIndex + 1].push(5, 6);
-          }
-          break;
-        default:
-          break;
-      }
-    });
-    updateSelectedArr(_selectedArr);
+    if (select) {
+      selectFunc(activeArr);
+    } else if (type === "unselect") {
+      unSelectFunc(activeArr);
+    }
   };
 
-  const selectFunc = () => {
-    selectedArr.map((item: number[], index: number) => {
-      myHooksChart.dispatchAction({
-        type: "select",
-        seriesIndex: index,
-        dataIndex: item,
-      });
-    });
-  };
-  const unSelectFunc = () => {
-    selectedArr.map((item: number[], index: number) => {
-      myHooksChart.dispatchAction({
-        type: "unselect",
-        seriesIndex: index,
-        dataIndex: item,
-      });
-    });
-    updateSelectedArr([]);
-  };
-
-  return (
-    <div>
-      <div className="charts" ref={ringHooksCharts} />
-
-      <button onClick={selectFunc}>select</button>
-      <button onClick={unSelectFunc}>unselect</button>
-    </div>
-  );
+  return <div className="charts" ref={ringHooksCharts} />;
 };
 
 export default RingHooks;

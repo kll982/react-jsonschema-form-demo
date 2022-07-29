@@ -4,7 +4,8 @@ import "echarts/lib/chart/sunburst";
 import "echarts/lib/component/tooltip";
 import "echarts/lib/component/title";
 import { weekDays, dayliys, relationshipArr } from "@/mock/sunburst-data";
-import { defaultPieOption } from "./utils";
+import { defaultPieOption, differenceArr } from "./utils";
+import { PieOption } from "./interface";
 
 const weekday: { name: any; value: number }[] = [];
 weekDays.map((item: { children: any[] }) => weekday.push(...item.children));
@@ -12,36 +13,20 @@ weekDays.map((item: { children: any[] }) => weekday.push(...item.children));
 const dayHour: { name: any; value: number }[] = [];
 dayliys.map((item: { children: any[] }) => dayHour.push(...item.children));
 
-// 俩个数组的差集,数组1-数组2
-const differenceArr = (arr1: any[], arr2: any[]) =>
-  arr1.filter((item) => !arr2.includes(item));
-
+interface StateProps {
+  changeRender:boolean
+}
 export default class Pie extends Component {
   chartSunburst: any;
-  option: {
-    title?: { text: string };
-    backgroundColor?: any;
-    series: {
-      itemStyle: { color: string; borderColor: any; borderWidth: number };
-      startAngle?: number; // 起始角度
-      data: any;
-      label: { color: string; show: boolean; position: string };
-      selectedMode: string;
-      selectedOffset: number;
-      select: { shadowBlur: number; itemStyle: { color: string } };
-      emphasis: { label: { color: string }; scale: boolean };
-      type: string;
-      radius: string[];
-      avoidLabelOverlap: boolean;
-    }[];
-  };
-  sunburstCharts: HTMLDivElement | HTMLCanvasElement;
+  option!: PieOption;
+  sunburstCharts!: HTMLDivElement | HTMLCanvasElement;
 
   constructor(props: {} | Readonly<{}>) {
     super(props);
     this.state = {
       changeRender: true,
-    };
+      selectedArr:[[],[],[],[]]
+    }<StateProps>;
   }
 
   async componentDidMount() {
@@ -49,13 +34,11 @@ export default class Pie extends Component {
     this.option = this.getOption();
     await this.chartSunburst.setOption(this.option);
 
-    this.chartSunburst.on("selectchanged", (params: any) => {
+    this.chartSunburst.on("selectchanged", (params: { selected: any; fromActionPayload: any; }) => {
       const { selected, fromActionPayload } = params;
       const { changeRender } = this.state;
       if (changeRender) {
         this.dealSeleced(selected, fromActionPayload);
-      } else {
-        console.log("selected", selected);
       }
     });
   }
@@ -139,20 +122,25 @@ export default class Pie extends Component {
           });
         }
       });
-      this.setState({ changeRender: true });
+      this.setState({ changeRender: true ,selectedArr});
     });
   };
 
   unSelectFunc = (unSelectedArr: number[][]) => {
+    const {selectedArr} =this.state;
+    let newSelectedArr :number[][]= [[],[],[],[]]
     this.setState({ changeRender: false }, () => {
       unSelectedArr.map((item: number[], index: number) => {
+        if (item.length > 0) {
+          newSelectedArr[index]=differenceArr(selectedArr[index],item)
         this.chartSunburst.dispatchAction({
           type: "unselect",
           seriesIndex: index,
           dataIndex: item,
         });
+      }
       });
-      this.setState({ changeRender: true });
+      this.setState({ changeRender: true,selectedArr:newSelectedArr });
     });
   };
 
@@ -184,13 +172,15 @@ export default class Pie extends Component {
         break;
       case 1:
       case 3:
-        relationshipArr[seriesIndex - 1].map((item, index) => {
-          const len = differenceArr(item, activeArr[seriesIndex]).length;
-          if ((len === 0 && select) || (len > 0 && !select)) {
-            activeArr[seriesIndex - 1].push(index);
+        relationshipArr[seriesIndex - 1].map(
+          (item: number[], index: number) => {
+            const len = differenceArr(item, activeArr[seriesIndex]).length;
+            if ((len === 0 && select) || (len > 0 && !select)) {
+              activeArr[seriesIndex - 1].push(index);
+            }
+            return len;
           }
-          return len;
-        });
+        );
         // map 数据,取relationshipArr[seriesIndex-1] 与 activeArr[seriesIndex] 差值,如果为空数组, activeArr[seriesIndex-1] push relationshipArr[seriesIndex-1] 的索引
         break;
       default:

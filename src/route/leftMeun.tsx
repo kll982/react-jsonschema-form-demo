@@ -11,7 +11,7 @@ const LeftMenu = () => {
       key: "/home",
     },
     {
-      label: "rjsf-form",
+      label: "自定义表单",
       key: "/rjsf-form",
       children: [
         { key: "/rjsf-form/widget", label: "widget" },
@@ -20,10 +20,10 @@ const LeftMenu = () => {
         { key: "/rjsf-form/ThemeForm", label: "颜色配置" },
       ],
     },
-    {
-      label: "dnd idSearch",
-      key: "/idSearch",
-    },
+    // {
+    //   label: "dnd idSearch",
+    //   key: "/idSearch",
+    // },
     {
       label: "时间轮",
       key: "/time-wheel",

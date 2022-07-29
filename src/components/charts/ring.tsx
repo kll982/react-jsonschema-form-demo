@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import EChartsReact from "echarts-for-react";
 import { weekDays, dayliys } from "@/mock/sunburst-data";
 import { defaultPieOption } from "./utils";
+import { PieOption } from "./interface";
 
 const weekday: { name: any; value: number }[] = [];
 weekDays.map((item: { children: any[] }) => weekday.push(...item.children));
@@ -19,7 +20,7 @@ export default class Pie extends Component {
   getOption = () => {
     const { series, backgroundColor } = defaultPieOption;
     const { itemStyle } = series;
-    let option = {
+    let option: PieOption = {
       title: { text: "环形图  react-echarts" },
       backgroundColor,
       series: [
