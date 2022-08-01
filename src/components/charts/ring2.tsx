@@ -6,6 +6,7 @@ import "echarts/lib/component/title";
 import { weekDays, dayliys, relationshipArr } from "@/mock/sunburst-data";
 import { defaultPieOption, differenceArr } from "./utils";
 import { PieOption } from "./interface";
+import _ from "lodash";
 
 const weekday: { name: any; value: number }[] = [];
 weekDays.map((item: { children: any[] }) => weekday.push(...item.children));
@@ -39,7 +40,7 @@ export default class Pie extends Component {
     this.chartSunburst = echarts.init(this.sunburstCharts) as HTMLCanvasElement;
     this.option = this.getOption();
     await this.chartSunburst.setOption(this.option);
-
+    this.selectFunc(this.state.selectedArr);
     this.chartSunburst.on(
       "selectchanged",
       (params: { selected: any; fromActionPayload: any }) => {
@@ -52,23 +53,17 @@ export default class Pie extends Component {
     );
   }
 
-  static getDerivedStateFromProps(nextProps: PropsType, prevState: StateType) {
-    // 该方法内禁止访问this
-    if (nextProps.value !== prevState.selectedArr) {
-      // 通过对比nextProps和prevState，返回一个用于更新状态的对象
-      return {
-        selectedArr: nextProps.value,
-      };
+  componentDidUpdate() {
+    if (this.state.changeRender) {
+      this.props?.onChange(this.state.selectedArr);
     }
-    // 不需要更新状态，返回null
-    return null;
   }
 
   getOption = () => {
     const { series, backgroundColor } = defaultPieOption;
     const { itemStyle } = series;
     let option = {
-      title: { text: "环形图  echarts" },
+      // title: { text: "环形图  echarts" },
       backgroundColor,
       series: [
         {
@@ -143,9 +138,7 @@ export default class Pie extends Component {
           });
         }
       });
-      this.setState({ changeRender: true, selectedArr }, () => {
-        this.props?.onChange(selectedArr);
-      });
+      this.setState({ changeRender: true, selectedArr });
     });
   };
 
@@ -166,10 +159,12 @@ export default class Pie extends Component {
           });
         }
       });
-      this.setState({ changeRender: true, selectedArr: newSelectedArr }, () => {
-        this.props?.onChange(selectedArr);
-      });
+      this.setState({ changeRender: true, selectedArr: newSelectedArr });
     });
+  };
+
+  onClearSelect = () => {
+    this.unSelectFunc(this.state.selectedArr);
   };
 
   dealSeleced = (
@@ -189,6 +184,7 @@ export default class Pie extends Component {
     // seriesIndex 层级
     // dataIndexInside 索引
     const { type, seriesIndex, dataIndexInside } = fromActionPayload; // select, unselect
+    unSelectedArr[seriesIndex].push(dataIndexInside);
     const select = type === "select";
     const activeArr: number[][] = select ? selectedArr : unSelectedArr;
     switch (seriesIndex) {
