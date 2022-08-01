@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Space } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import { RingCharts2 } from "components";
 import { weekDays, dayliys, relationshipArr } from "@/mock/sunburst-data";
 import _ from "lodash";
-import { differenceArr } from "../../charts/utils";
+import { differenceArr } from "components/charts/utils";
+import "./index.less";
 
 interface TextAreaProps {
   formData: number[][];
@@ -58,12 +59,14 @@ const TimeWheel = (props: TextAreaProps) => {
             } else {
               relationshipArr[index - 1].map((it: number[], idx: number) => {
                 if (differenceArr(it, item).length > 0) {
-                  const name = item.map(
-                    (key) =>
-                      weekDays[idx].children.find(
-                        (day: { index: number }) => key === day.index
-                      )?.name
-                  );
+                  const name = item
+                    .map(
+                      (key) =>
+                        weekDays[idx].children.find(
+                          (day: { index: number }) => key === day.index
+                        )?.name
+                    )
+                    .filter((it) => !_.isNil(it));
                   dayText.push(...name);
                 }
               });
@@ -75,12 +78,14 @@ const TimeWheel = (props: TextAreaProps) => {
             } else {
               relationshipArr[index - 1].map((it: number[], idx: number) => {
                 if (differenceArr(it, item).length > 0) {
-                  const name = item.map(
-                    (key) =>
-                      dayliys[idx].children.find(
-                        (hour: { index: number }) => key === hour.index
-                      )?.name
-                  );
+                  const name = item
+                    .map(
+                      (key) =>
+                        dayliys[idx].children.find(
+                          (hour: { index: number }) => key === hour.index
+                        )?.name
+                    )
+                    .filter((it) => !_.isNil(it));
                   timeText.push(...name);
                 }
               });
@@ -89,34 +94,35 @@ const TimeWheel = (props: TextAreaProps) => {
         }
       });
       setText({
-        dayText: dayText.filter((it) => !_.isNil(it)),
-        timeText: timeText.filter((it) => !_.isNil(it)),
+        dayText,
+        timeText,
       });
     },
-    [formData]
+    [timeValue]
   );
 
   return (
-    <Row>
+    <Row className="time-row">
+      <div className="time-title">
+        <div className="time-title-text">
+          <Space>
+            {text.timeText.join(", ")}
+            {text.dayText.length && text.timeText.length ? " on " : null}
+            {text.dayText.join(", ")}
+          </Space>
+          <CloseOutlined
+            onClick={() => {
+              timeChartsRef?.current?.onClearSelect();
+            }}
+          />
+        </div>
+      </div>
       <Col span={24}>
-        {text.dayText || text.timeText ? (
-          <span>
-            {text.dayText.join(" & ")} in {text.timeText.join(" & ")}
-            <CloseOutlined
-              onClick={() => {
-                timeChartsRef?.current?.onClearSelect();
-              }}
-            />
-          </span>
-        ) : null}
-      </Col>
-      <Col span={24}>
-        时间轮
         <RingCharts2
           ref={timeChartsRef}
-          onChange={(value: React.SetStateAction<number[][]>) =>
-            updateTimeValue(value)
-          }
+          onChange={(value: React.SetStateAction<number[][]>) => {
+            updateTimeValue(value);
+          }}
           value={timeValue}
         />
       </Col>

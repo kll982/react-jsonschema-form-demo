@@ -14,8 +14,8 @@ weekDays.map((item: { children: any[] }) => weekday.push(...item.children));
 const dayHour: { name: any; value: number }[] = [];
 dayliys.map((item: { children: any[] }) => dayHour.push(...item.children));
 interface PropsType {
-  onChange: (value: number[][]) => void;
-  value: number[][];
+  onChange?: (value: number[][]) => void;
+  value?: number[][];
 }
 interface StateType {
   changeRender: boolean;
@@ -40,7 +40,7 @@ export default class Pie extends Component {
     this.chartSunburst = echarts.init(this.sunburstCharts) as HTMLCanvasElement;
     this.option = this.getOption();
     await this.chartSunburst.setOption(this.option);
-    this.selectFunc(this.state.selectedArr);
+    this.selectFunc(this.state.selectedArr); // 回显数据
     this.chartSunburst.on(
       "selectchanged",
       (params: { selected: any; fromActionPayload: any }) => {
@@ -55,7 +55,7 @@ export default class Pie extends Component {
 
   componentDidUpdate() {
     if (this.state.changeRender) {
-      this.props?.onChange(this.state.selectedArr);
+      this.props?.onChange && this.props?.onChange(this.state.selectedArr);
     }
   }
 
@@ -68,7 +68,7 @@ export default class Pie extends Component {
       series: [
         {
           type: "pie",
-          radius: ["5%", "25%"],
+          radius: ["3%", "30%"],
           avoidLabelOverlap: false,
           ...series,
           itemStyle: {
@@ -84,7 +84,7 @@ export default class Pie extends Component {
         },
         {
           type: "pie",
-          radius: ["25%", "40%"],
+          radius: ["30%", "55%"],
           avoidLabelOverlap: false,
           ...series,
           itemStyle: {
@@ -95,7 +95,7 @@ export default class Pie extends Component {
         },
         {
           type: "pie",
-          radius: ["45%", "60%"],
+          radius: ["55%", "75%"],
           avoidLabelOverlap: false,
           ...series,
           itemStyle: {
@@ -112,7 +112,7 @@ export default class Pie extends Component {
         },
         {
           type: "pie",
-          radius: ["60%", "75%"],
+          radius: ["75%", "95%"],
           avoidLabelOverlap: false,
           ...series,
           startAngle: -15, // 起始角度
@@ -143,20 +143,19 @@ export default class Pie extends Component {
   };
 
   unSelectFunc = (unSelectedArr: number[][]) => {
-    const selectedArr: number[][] = this.state.selectedArr || [[], [], [], []];
+    const selectedArr: number[][] = this.state.selectedArr;
     let newSelectedArr: number[][] = [[], [], [], []];
     this.setState({ changeRender: false }, () => {
       unSelectedArr.map((item: number[], index: number) => {
         if (item.length > 0) {
-          newSelectedArr[index] = differenceArr(
-            (selectedArr && selectedArr[index]) || [],
-            item
-          );
+          newSelectedArr[index] = differenceArr(selectedArr[index], item);
           this.chartSunburst.dispatchAction({
             type: "unselect",
             seriesIndex: index,
             dataIndex: item,
           });
+        } else {
+          newSelectedArr[index] = selectedArr[index];
         }
       });
       this.setState({ changeRender: true, selectedArr: newSelectedArr });
@@ -210,7 +209,6 @@ export default class Pie extends Component {
       default:
         break;
     }
-
     if (select) {
       this.selectFunc(activeArr);
     } else if (type === "unselect") {
@@ -222,8 +220,8 @@ export default class Pie extends Component {
     return (
       <canvas
         className="charts"
-        width={300}
-        height={300}
+        width={400}
+        height={400}
         ref={(e) => (this.sunburstCharts = e as HTMLCanvasElement)}
       />
     );

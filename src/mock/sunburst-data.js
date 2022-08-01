@@ -2,7 +2,7 @@ import { colors, bgColor } from "./sunburst-color";
 
 const dayliys = [
   {
-    name: "day",
+    name: "Day",
     title: "白天",
     color: "white",
     children: [
@@ -69,7 +69,7 @@ const dayliys = [
     ],
   },
   {
-    name: "night",
+    name: "Night",
     title: "夜晚",
     color: "gray",
     children: [
@@ -139,7 +139,7 @@ const dayliys = [
 
 const weekDays = [
   {
-    name: "workDay",
+    name: "Workday",
     title: "工作日",
     children: [
       {
@@ -180,7 +180,7 @@ const weekDays = [
     ],
   },
   {
-    name: "weekend",
+    name: "Weekend",
     title: "休息日",
     children: [
       {

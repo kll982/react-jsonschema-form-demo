@@ -62,10 +62,10 @@ export const RenderRjsfForm = (props: RjsfProps) => {
     console.log("onFormSubmit", formData);
     onSubmit && onSubmit(formData);
   };
-  const onFormChange = ({ formData }: { formData: object }) => {
+  const onFormChange = _.debounce(({ formData }: { formData: object }) => {
     console.log("onFormChange", formData);
     onChange && onChange(formData);
-  };
+  }, 500);
 
   const onFormError = (errors: Array<object>) => {
     console.log("onFormError", errors);
