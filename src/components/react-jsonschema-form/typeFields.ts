@@ -1,5 +1,5 @@
 import { ColorPicker, FileUpload, Textarea } from "./widgets";
-import { GeoPosition, GeoHooksPosition, SmartText } from "./fields";
+import { GeoPosition, GeoHooksPosition, SmartText, TimeWheel } from "./fields";
 
 const fields = {
   color: ColorPicker,
@@ -8,6 +8,7 @@ const fields = {
   geo: GeoPosition,
   geoHooks: GeoHooksPosition,
   smartText: SmartText,
+  TimeWheel: TimeWheel,
 };
 
 // Example:

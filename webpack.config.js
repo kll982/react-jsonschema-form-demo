@@ -27,9 +27,9 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
     modules: [path.join(__dirname, "./"), "node_modules"],
     alias: {
-      components: path.resolve(__dirname, "./src/components/"),
-      src: path.resolve(__dirname, "./src"),
-      "@": path.resolve(__dirname, "./src"),
+      components: path.resolve("./src/components/"),
+      src: path.resolve("./src"),
+      "@": path.resolve("./src"),
     },
   },
   module: {

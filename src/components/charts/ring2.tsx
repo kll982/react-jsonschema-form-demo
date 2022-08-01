@@ -12,21 +12,27 @@ weekDays.map((item: { children: any[] }) => weekday.push(...item.children));
 
 const dayHour: { name: any; value: number }[] = [];
 dayliys.map((item: { children: any[] }) => dayHour.push(...item.children));
-
-interface StateProps {
-  changeRender:boolean
+interface PropsType {
+  onChange: (value: number[][]) => void;
+  value: number[][];
+}
+interface StateType {
+  changeRender: boolean;
+  selectedArr: number[][];
 }
 export default class Pie extends Component {
+  props!: PropsType;
+  state: StateType;
   chartSunburst: any;
   option!: PieOption;
   sunburstCharts!: HTMLDivElement | HTMLCanvasElement;
 
-  constructor(props: {} | Readonly<{}>) {
+  constructor(props: PropsType) {
     super(props);
     this.state = {
       changeRender: true,
-      selectedArr:[[],[],[],[]]
-    }<StateProps>;
+      selectedArr: props.value || [[], [], [], []],
+    };
   }
 
   async componentDidMount() {
@@ -34,13 +40,28 @@ export default class Pie extends Component {
     this.option = this.getOption();
     await this.chartSunburst.setOption(this.option);
 
-    this.chartSunburst.on("selectchanged", (params: { selected: any; fromActionPayload: any; }) => {
-      const { selected, fromActionPayload } = params;
-      const { changeRender } = this.state;
-      if (changeRender) {
-        this.dealSeleced(selected, fromActionPayload);
+    this.chartSunburst.on(
+      "selectchanged",
+      (params: { selected: any; fromActionPayload: any }) => {
+        const { selected, fromActionPayload } = params;
+        const { changeRender } = this.state;
+        if (changeRender) {
+          this.dealSeleced(selected, fromActionPayload);
+        }
       }
-    });
+    );
+  }
+
+  static getDerivedStateFromProps(nextProps: PropsType, prevState: StateType) {
+    // 该方法内禁止访问this
+    if (nextProps.value !== prevState.selectedArr) {
+      // 通过对比nextProps和prevState，返回一个用于更新状态的对象
+      return {
+        selectedArr: nextProps.value,
+      };
+    }
+    // 不需要更新状态，返回null
+    return null;
   }
 
   getOption = () => {
@@ -122,25 +143,32 @@ export default class Pie extends Component {
           });
         }
       });
-      this.setState({ changeRender: true ,selectedArr});
+      this.setState({ changeRender: true, selectedArr }, () => {
+        this.props?.onChange(selectedArr);
+      });
     });
   };
 
   unSelectFunc = (unSelectedArr: number[][]) => {
-    const {selectedArr} =this.state;
-    let newSelectedArr :number[][]= [[],[],[],[]]
+    const selectedArr: number[][] = this.state.selectedArr || [[], [], [], []];
+    let newSelectedArr: number[][] = [[], [], [], []];
     this.setState({ changeRender: false }, () => {
       unSelectedArr.map((item: number[], index: number) => {
         if (item.length > 0) {
-          newSelectedArr[index]=differenceArr(selectedArr[index],item)
-        this.chartSunburst.dispatchAction({
-          type: "unselect",
-          seriesIndex: index,
-          dataIndex: item,
-        });
-      }
+          newSelectedArr[index] = differenceArr(
+            (selectedArr && selectedArr[index]) || [],
+            item
+          );
+          this.chartSunburst.dispatchAction({
+            type: "unselect",
+            seriesIndex: index,
+            dataIndex: item,
+          });
+        }
       });
-      this.setState({ changeRender: true,selectedArr:newSelectedArr });
+      this.setState({ changeRender: true, selectedArr: newSelectedArr }, () => {
+        this.props?.onChange(selectedArr);
+      });
     });
   };
 
@@ -196,9 +224,11 @@ export default class Pie extends Component {
 
   render() {
     return (
-      <div
+      <canvas
         className="charts"
-        ref={(e) => (this.sunburstCharts = e as HTMLElement)}
+        width={300}
+        height={300}
+        ref={(e) => (this.sunburstCharts = e as HTMLCanvasElement)}
       />
     );
   }

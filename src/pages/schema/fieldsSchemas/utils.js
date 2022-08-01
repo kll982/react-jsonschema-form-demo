@@ -22,6 +22,10 @@ const defaultSchema = {
       title: "smartText",
       type: "object",
     },
+    timeWheel: {
+      title: "timeWheel",
+      type: "object",
+    },
   },
 };
 
@@ -44,6 +48,9 @@ const defaultUiSchema = {
   },
   smartText: {
     "ui:field": "smartText",
+  },
+  timeWheel: {
+    "ui:field": "TimeWheel",
   },
   smartTextSchema: {
     textarea: {

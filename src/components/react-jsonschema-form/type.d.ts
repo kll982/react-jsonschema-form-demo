@@ -7,3 +7,4 @@ declare module "@rjsf/antd" {
 
 declare module "lodash";
 declare module "lodash-contrib";
+declare module "echarts/lib/echarts";
