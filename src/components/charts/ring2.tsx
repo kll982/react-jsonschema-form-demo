@@ -63,7 +63,6 @@ export default class Pie extends Component {
     const { series, backgroundColor } = defaultPieOption;
     const { itemStyle } = series;
     let option = {
-      // title: { text: "环形图  echarts" },
       backgroundColor,
       series: [
         {

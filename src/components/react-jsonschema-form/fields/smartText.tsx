@@ -1,9 +1,14 @@
 import React, { TextareaHTMLAttributes, useEffect, useState } from "react";
-import { Row, Col, Checkbox } from "antd";
-import { Textarea as TextareaWidget } from "../widgets";
+import { Row, Col, Checkbox, Input } from "antd";
+import { UiSchema } from "@rjsf/core";
+import { JSONSchema7 } from "json-schema";
+
+const { TextArea } = Input;
 
 type Textvalue = TextareaHTMLAttributes<HTMLTextAreaElement>["value"];
 interface TextAreaProps {
+  schema: JSONSchema7;
+  uiSchema?: UiSchema;
   formData: {
     text: Textvalue;
     check: boolean;
@@ -12,8 +17,8 @@ interface TextAreaProps {
 }
 
 const SmartText = (props: TextAreaProps) => {
-  const { formData, onChange } = props;
-
+  const { formData, onChange, uiSchema } = props;
+  const options = uiSchema["ui:option"] || {};
   return (
     <Row>
       <Col span={24}>
@@ -28,11 +33,15 @@ const SmartText = (props: TextAreaProps) => {
         </Checkbox>
       </Col>
       <Col span={24}>
-        <TextareaWidget
+        <TextArea
+          data-prefix={options.prefix}
           value={formData.text}
-          onChange={(value) => {
-            onChange && onChange({ ...formData, text: value });
+          allowClear
+          autoSize={{ minRows: 5 }}
+          onChange={(e) => {
+            onChange && onChange({ ...formData, text: e.target.value });
           }}
+          style={{ width: "100%", maxHeight: 180, overflow: "auto" }}
         />
       </Col>
     </Row>

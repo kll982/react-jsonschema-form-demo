@@ -5,8 +5,8 @@ const defaultPieOption = {
   series: {
     label: {
       color: "#333",
-      show: true,
       position: "inside",
+      fontSize: 10,
     },
     itemStyle: {
       color: (index: number) =>
@@ -24,9 +24,7 @@ const defaultPieOption = {
       label: {
         color: "#fff",
       },
-      // disabled: true,
       scale: false,
-      //   focus: "series",
     },
   },
 };

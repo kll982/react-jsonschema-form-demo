@@ -18,9 +18,12 @@ const TimeWheel = (props: TextAreaProps) => {
 
   const [timeValue, updateTimeValue] = useState(formData);
 
-  const [text, setText] = useState<{ dayText: string[]; timeText: string[] }>({
-    dayText: [],
-    timeText: [],
+  const [text, setText] = useState<{
+    dayTextArr: string[];
+    timeTextArr: string[];
+  }>({
+    dayTextArr: [],
+    timeTextArr: [],
   });
 
   useEffect(() => {
@@ -30,32 +33,32 @@ const TimeWheel = (props: TextAreaProps) => {
 
   const selectedText = useCallback(
     (selectedArr: number[][]) => {
-      let dayText: string[] = [],
-        timeText: string[] = [];
+      let dayTextArr: string[] = [],
+        timeTextArr: string[] = [];
       selectedArr.map((_item, index) => {
         const item = [...new Set(_item)];
         switch (index) {
           case 0:
             if (item.length == relationshipArr[index].length) {
-              dayText = ["All Week"];
+              dayTextArr = ["All Week"];
             } else if (item.length == 1) {
-              item.map((it) => (dayText = [weekDays[it].name]));
+              item.map((it) => (dayTextArr = [weekDays[it].name]));
             } else {
-              dayText = [];
+              dayTextArr = [];
             }
             break;
           case 2:
             if (item.length == 2) {
-              timeText = ["All Day"];
+              timeTextArr = ["All Day"];
             } else if (item.length == 1) {
-              item.map((it) => (timeText = [dayliys[it].name]));
+              item.map((it) => (timeTextArr = [dayliys[it].name]));
             } else {
-              timeText = [];
+              timeTextArr = [];
             }
             break;
           case 1:
             if (item.length === 0) {
-              dayText = [];
+              dayTextArr = [];
             } else {
               relationshipArr[index - 1].map((it: number[], idx: number) => {
                 if (differenceArr(it, item).length > 0) {
@@ -67,14 +70,14 @@ const TimeWheel = (props: TextAreaProps) => {
                         )?.name
                     )
                     .filter((it) => !_.isNil(it));
-                  dayText.push(...name);
+                  dayTextArr.push(...name);
                 }
               });
             }
             break;
           case 3:
             if (item.length === 0) {
-              timeText = [];
+              timeTextArr = [];
             } else {
               relationshipArr[index - 1].map((it: number[], idx: number) => {
                 if (differenceArr(it, item).length > 0) {
@@ -86,7 +89,7 @@ const TimeWheel = (props: TextAreaProps) => {
                         )?.name
                     )
                     .filter((it) => !_.isNil(it));
-                  timeText.push(...name);
+                  timeTextArr.push(...name);
                 }
               });
             }
@@ -94,8 +97,8 @@ const TimeWheel = (props: TextAreaProps) => {
         }
       });
       setText({
-        dayText,
-        timeText,
+        dayTextArr,
+        timeTextArr,
       });
     },
     [timeValue]
@@ -104,19 +107,24 @@ const TimeWheel = (props: TextAreaProps) => {
   return (
     <Row className="time-row">
       <div className="time-title">
-        <div className="time-title-text">
-          <Space>
-            {text.timeText.join(", ")}
-            {text.dayText.length && text.timeText.length ? " on " : null}
-            {text.dayText.join(", ")}
-          </Space>
-          <CloseOutlined
-            onClick={() => {
-              timeChartsRef?.current?.onClearSelect();
-            }}
-          />
-        </div>
+        {text.timeTextArr.length > 0 || text.dayTextArr.length > 0 ? (
+          <div className="time-title-text">
+            <Space>
+              {text.timeTextArr.join(", ")}
+              {text.dayTextArr.length > 0 && text.timeTextArr.length > 0
+                ? " on "
+                : null}
+              {text.dayTextArr.join(", ")}
+            </Space>
+            <CloseOutlined
+              onClick={() => {
+                timeChartsRef?.current?.onClearSelect();
+              }}
+            />
+          </div>
+        ) : null}
       </div>
+
       <Col span={24}>
         <RingCharts2
           ref={timeChartsRef}

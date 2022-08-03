@@ -24,7 +24,7 @@ const defaultSchema = {
     },
     timeWheel: {
       title: "timeWheel",
-      type: "object",
+      type: "array",
     },
   },
 };
@@ -48,6 +48,7 @@ const defaultUiSchema = {
   },
   smartText: {
     "ui:field": "smartText",
+    "ui:option": { prefix: "id" },
   },
   timeWheel: {
     "ui:field": "TimeWheel",
