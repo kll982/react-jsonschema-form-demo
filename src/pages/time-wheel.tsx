@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Space } from "antd";
 import {
   SunburstCharts,
   SunburstCharts2,
@@ -11,21 +11,21 @@ import {
 export const TimeWheel = () => {
   return (
     <Row gutter={[20, 8]}>
-      {/* <Col span={12}>
+      <Col>
         <RingCharts />
-      </Col> */}
-      <Col span={12}>
+      </Col>
+      <Col>
         <RingCharts2 />
       </Col>
-      <Col span={12}>
+      <Col>
         <RingHooks />
       </Col>
-      {/* <Col span={12}>
+      <Col>
         <SunburstCharts />
       </Col>
-      <Col span={12}>
+      <Col>
         <SunburstCharts2 />
-      </Col> */}
+      </Col>
     </Row>
   );
 };

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Row, Col, Space } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import { RingCharts2 } from "components";
-import { weekDays, dayliys, relationshipArr } from "@/mock/sunburst-data";
+import { weekDays, dayliys, relationshipArr } from "@/mock/ring-data";
 import _ from "lodash";
 import { differenceArr } from "components/charts/utils";
 import "./index.less";

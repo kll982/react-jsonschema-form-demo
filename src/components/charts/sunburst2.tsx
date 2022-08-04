@@ -1,4 +1,5 @@
 import React, { useEffect, Component } from "react";
+import { Space, Button } from "antd";
 import * as echarts from "echarts/lib/echarts";
 import "echarts/lib/chart/sunburst";
 import "echarts/lib/component/tooltip";
@@ -130,16 +131,19 @@ export default class Pie extends Component {
 
   render() {
     return (
-      <div>
-        <div
-          className="charts"
+      <div style={{ display: "grid", rowGap: 10 }}>
+        <canvas
+          width={400}
+          height={400}
           ref={(e) => (this.sunburstCharts = e as HTMLElement)}
         />
-        <button onClick={this.highlight}>highlight</button>
-        <button onClick={this.downplay}>downplay</button>
+        <Space>
+          <Button onClick={this.highlight}>highlight</Button>
+          <Button onClick={this.downplay}>downplay</Button>
 
-        <button onClick={this.select}>select</button>
-        <button onClick={this.unselect}>unselect</button>
+          <Button onClick={this.select}>select</Button>
+          <Button onClick={this.unselect}>unselect</Button>
+        </Space>
       </div>
     );
   }

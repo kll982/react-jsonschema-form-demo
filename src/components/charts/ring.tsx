@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import EChartsReact from "echarts-for-react";
-import { weekDays, dayliys } from "@/mock/sunburst-data";
+import { weekDays, dayliys } from "@/mock/ring-data";
 import { defaultPieOption } from "./utils";
 import { PieOption } from "./interface";
 
@@ -101,6 +101,13 @@ export default class Pie extends Component {
       select: this.onChartClick.bind(this),
     };
 
-    return <EChartsReact option={this.getOption()} onEvents={onEvents} />;
+    return (
+      <EChartsReact
+        width={400}
+        height={400}
+        option={this.getOption()}
+        onEvents={onEvents}
+      />
+    );
   }
 }

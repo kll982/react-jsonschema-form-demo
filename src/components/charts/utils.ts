@@ -1,4 +1,4 @@
-import { bgColor, colors } from "@/mock/sunburst-data";
+import { bgColor, colors } from "@/mock/sunburst-color";
 
 const defaultPieOption = {
   backgroundColor: bgColor,

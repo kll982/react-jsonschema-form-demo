@@ -3,10 +3,9 @@ import * as echarts from "echarts/lib/echarts";
 import "echarts/lib/chart/sunburst";
 import "echarts/lib/component/tooltip";
 import "echarts/lib/component/title";
-import { weekDays, dayliys } from "@/mock/sunburst-data";
+import { weekDays, dayliys, relationshipArr } from "@/mock/ring-data";
 import { defaultPieOption, differenceArr } from "./utils";
 import { PieOption } from "./interface";
-import { relationshipArr } from "../../mock/sunburst-data";
 
 const weekday: { name: any; value: number }[] = [];
 weekDays.map((item: { children: any[] }) => weekday.push(...item.children));
@@ -198,7 +197,7 @@ const RingHooks = () => {
     }
   };
 
-  return <div className="charts" ref={ringHooksCharts} />;
+  return <canvas width={400} height={400} ref={ringHooksCharts} />;
 };
 
 export default RingHooks;

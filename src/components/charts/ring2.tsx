@@ -3,16 +3,16 @@ import * as echarts from "echarts/lib/echarts";
 import "echarts/lib/chart/sunburst";
 import "echarts/lib/component/tooltip";
 import "echarts/lib/component/title";
-import { weekDays, dayliys, relationshipArr } from "@/mock/sunburst-data";
+import {
+  weekDays,
+  dayliysObj,
+  relationshipArr,
+  weekday,
+  dayHour,
+} from "@/mock/ring-data";
 import { defaultPieOption, differenceArr } from "./utils";
 import { PieOption } from "./interface";
 import _ from "lodash";
-
-const weekday: { name: any; value: number }[] = [];
-weekDays.map((item: { children: any[] }) => weekday.push(...item.children));
-
-const dayHour: { name: any; value: number }[] = [];
-dayliys.map((item: { children: any[] }) => dayHour.push(...item.children));
 interface PropsType {
   onChange?: (value: number[][]) => void;
   value?: number[][];
@@ -101,8 +101,8 @@ export default class Pie extends Component {
             ...itemStyle,
             color: itemStyle.color(2),
           },
-          startAngle: -15, // 起始角度
-          data: dayliys.map(
+          startAngle: dayliysObj.startAngleInside, // 起始角度
+          data: dayliysObj.data.map(
             (item: { title: any; name: any; children: object[] }) => ({
               ...item,
               value: item.children.length,
@@ -114,7 +114,7 @@ export default class Pie extends Component {
           radius: ["75%", "95%"],
           avoidLabelOverlap: false,
           ...series,
-          startAngle: -15, // 起始角度
+          startAngle: dayliysObj.startAngleOutside, // 起始角度
           itemStyle: {
             ...itemStyle,
             color: itemStyle.color(3),
@@ -218,7 +218,6 @@ export default class Pie extends Component {
   render() {
     return (
       <canvas
-        className="charts"
         width={400}
         height={400}
         ref={(e) => (this.sunburstCharts = e as HTMLCanvasElement)}
