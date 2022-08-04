@@ -16,7 +16,8 @@ const TimeWheel = (props: TextAreaProps) => {
   const { formData = [[], [], [], []], onChange } = props;
   const timeChartsRef = useRef();
 
-  const [timeValue, updateTimeValue] = useState(formData);
+  const defaultValue = _.isArray(formData) ? formData : [[], [], [], []];
+  const [timeValue, updateTimeValue] = useState(defaultValue);
 
   const [text, setText] = useState<{
     dayTextArr: string[];
