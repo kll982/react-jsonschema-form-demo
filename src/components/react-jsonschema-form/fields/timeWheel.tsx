@@ -83,12 +83,12 @@ const TimeWheel = (props: TextAreaProps) => {
               relationshipArr[index - 1].map((it: number[], idx: number) => {
                 if (differenceArr(it, item).length > 0) {
                   const name = item
-                    .map(
-                      (key) =>
-                        dayliys[idx].children.find(
-                          (hour: { index: number }) => key === hour.index
-                        )?.name
-                    )
+                    .map((key) => {
+                      const hours = dayliys[idx].children.find(
+                        (hour: { index: number }) => key === hour.index
+                      );
+                      return hours?.name ? hours.name + "" : null;
+                    })
                     .filter((it) => !_.isNil(it));
                   timeTextArr.push(...name);
                 }

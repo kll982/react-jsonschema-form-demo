@@ -62,6 +62,141 @@ const weekDays = [
   },
 ];
 
+// const dayliys1 = [
+//   {
+//     name: "Day",
+//     title: "白天",
+//     children: [
+//       {
+//         name: 8,
+//         index: 7,
+//         value: 1,
+//       },
+//       {
+//         name: 9,
+//         index: 8,
+//         value: 1,
+//       },
+//       {
+//         name: 10,
+//         index: 9,
+//         value: 1,
+//       },
+//       {
+//         name: 11,
+//         index: 10,
+//         value: 1,
+//       },
+//       {
+//         name: 12,
+//         index: 11,
+//         value: 1,
+//       },
+//       {
+//         name: 13,
+//         index: 12,
+//         value: 1,
+//       },
+//       {
+//         name: 14,
+//         index: 13,
+//         value: 1,
+//       },
+//       {
+//         name: 15,
+//         index: 14,
+//         value: 1,
+//       },
+//       {
+//         name: 16,
+//         index: 15,
+//         value: 1,
+//       },
+//       {
+//         name: 17,
+//         index: 16,
+//         value: 1,
+//       },
+//       {
+//         name: 18,
+//         index: 17,
+//         value: 1,
+//       },
+//       {
+//         name: 19,
+//         index: 18,
+//         value: 1,
+//       },
+//     ],
+//   },
+//   {
+//     name: "Night",
+//     title: "夜晚",
+//     children: [
+//       {
+//         name: 20,
+//         index: 19,
+//         value: 1,
+//       },
+//       {
+//         name: 21,
+//         index: 20,
+//         value: 1,
+//       },
+//       {
+//         name: 22,
+//         index: 21,
+//         value: 1,
+//       },
+//       {
+//         name: 23,
+//         index: 22,
+//         value: 1,
+//       },
+//       {
+//         name: 24,
+//         index: 23,
+//         value: 1,
+//       },
+//       {
+//         name: 1,
+//         index: 0,
+//         value: 1,
+//       },
+//       {
+//         name: 2,
+//         index: 1,
+//         value: 1,
+//       },
+//       {
+//         name: 3,
+//         index: 2,
+//         value: 1,
+//       },
+//       {
+//         name: 4,
+//         index: 3,
+//         value: 1,
+//       },
+//       {
+//         name: 5,
+//         index: 4,
+//         value: 1,
+//       },
+//       {
+//         name: 6,
+//         index: 5,
+//         value: 1,
+//       },
+//       {
+//         name: 7,
+//         index: 6,
+//         value: 1,
+//       },
+//     ],
+//   },
+// ];
+
 const dayliys1 = [
   {
     name: "Day",
@@ -199,145 +334,145 @@ const dayliys1 = [
 
 const dayliys2 = [
   {
-    name: "before dawn",
+    name: "Before Dawn",
     title: "凌晨",
     children: [
       {
         name: 1,
-        index: 17,
-        value: 1,
-      },
-      {
-        name: 2,
-        index: 18,
-        value: 1,
-      },
-      {
-        name: 3,
-        index: 19,
-        value: 1,
-      },
-      {
-        name: 4,
-        index: 20,
-        value: 1,
-      },
-      {
-        name: 5,
-        index: 21,
-        value: 1,
-      },
-      {
-        name: 6,
-        index: 22,
-        value: 1,
-      },
-    ],
-  },
-  {
-    name: "am",
-    title: "上午",
-    children: [
-      {
-        name: 7,
-        index: 23,
-        value: 1,
-      },
-      {
-        name: 8,
         index: 0,
         value: 1,
       },
       {
-        name: 9,
+        name: 2,
         index: 1,
         value: 1,
       },
       {
-        name: 10,
+        name: 3,
         index: 2,
         value: 1,
       },
       {
-        name: 11,
+        name: 4,
         index: 3,
         value: 1,
       },
       {
-        name: 12,
+        name: 5,
         index: 4,
+        value: 1,
+      },
+      {
+        name: 6,
+        index: 5,
         value: 1,
       },
     ],
   },
   {
-    name: "pm",
-    title: "下午",
+    name: "AM",
+    title: "上午",
     children: [
       {
-        name: 13,
-        index: 5,
-        value: 1,
-      },
-      {
-        name: 14,
+        name: 7,
         index: 6,
         value: 1,
       },
       {
-        name: 15,
+        name: 8,
         index: 7,
         value: 1,
       },
       {
-        name: 16,
+        name: 9,
         index: 8,
         value: 1,
       },
       {
-        name: 17,
+        name: 10,
         index: 9,
         value: 1,
       },
       {
-        name: 18,
+        name: 11,
         index: 10,
+        value: 1,
+      },
+      {
+        name: 12,
+        index: 11,
         value: 1,
       },
     ],
   },
   {
-    name: "evening",
-    title: "晚上",
+    name: "PM",
+    title: "下午",
     children: [
       {
-        name: 19,
-        index: 11,
-        value: 1,
-      },
-      {
-        name: 20,
+        name: 13,
         index: 12,
         value: 1,
       },
       {
-        name: 21,
+        name: 14,
         index: 13,
         value: 1,
       },
       {
-        name: 22,
+        name: 15,
         index: 14,
         value: 1,
       },
       {
-        name: 23,
+        name: 16,
         index: 15,
         value: 1,
       },
       {
-        name: 24,
+        name: 17,
         index: 16,
+        value: 1,
+      },
+      {
+        name: 18,
+        index: 17,
+        value: 1,
+      },
+    ],
+  },
+  {
+    name: "Evening",
+    title: "晚上",
+    children: [
+      {
+        name: 19,
+        index: 18,
+        value: 1,
+      },
+      {
+        name: 20,
+        index: 19,
+        value: 1,
+      },
+      {
+        name: 21,
+        index: 20,
+        value: 1,
+      },
+      {
+        name: 22,
+        index: 21,
+        value: 1,
+      },
+      {
+        name: 23,
+        index: 22,
+        value: 1,
+      },
+      {
+        name: 24,
+        index: 23,
         value: 1,
       },
     ],

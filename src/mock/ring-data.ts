@@ -9,10 +9,10 @@ const dayliysArr = [
   {
     data: dayliys2,
     startAngleInside: 90,
-    startAngleOutside: -15,
+    startAngleOutside: 90,
   },
 ];
-const dayliysObj = dayliysArr[1];
+const dayliysObj = dayliysArr[0];
 const dayliys = dayliysObj.data;
 
 const relationshipArr = [
