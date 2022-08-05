@@ -1,5 +1,6 @@
-import ObjectFieldTemplate from "./ObjectFieldTemplate";
+import ObjectFieldTemplate from "./objectFieldTemplate";
 import ArrayFieldTemplate from "./arrayFieldTemplate";
+import { ErrorListTemplate } from "./errorListTemplate";
 import {
   CustomFieldTemplate,
   CustomFieldLabelWidthTemplate,
@@ -10,4 +11,5 @@ export {
   ArrayFieldTemplate,
   CustomFieldTemplate,
   CustomFieldLabelWidthTemplate,
+  ErrorListTemplate,
 };
