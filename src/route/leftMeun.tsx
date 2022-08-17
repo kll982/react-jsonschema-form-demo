@@ -18,6 +18,7 @@ const LeftMenu = () => {
         { key: "/rjsf-form/field", label: "field" },
         { key: "/rjsf-form/BasicLayoutForm", label: "form" },
         { key: "/rjsf-form/ThemeForm", label: "颜色配置" },
+        { key: "/rjsf-form/ValidateForm", label: "validate" },
       ],
     },
     // {

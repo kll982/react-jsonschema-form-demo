@@ -3,7 +3,7 @@ import { Row, Col, Space } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import { RingCharts2 } from "components";
 import { weekDays, dayliys, relationshipArr } from "@/mock/ring-data";
-import _ from "lodash";
+import { isNil, isArray } from "lodash";
 import { differenceArr } from "components/charts/utils";
 import "./index.less";
 
@@ -16,7 +16,7 @@ const TimeWheel = (props: TextAreaProps) => {
   const { formData = [[], [], [], []], onChange } = props;
   const timeChartsRef = useRef();
 
-  const defaultValue = _.isArray(formData) ? formData : [[], [], [], []];
+  const defaultValue = isArray(formData) ? formData : [[], [], [], []];
   const [timeValue, updateTimeValue] = useState(defaultValue);
 
   const [text, setText] = useState<{
@@ -42,8 +42,14 @@ const TimeWheel = (props: TextAreaProps) => {
           case 0:
             if (item.length == relationshipArr[index].length) {
               dayTextArr = ["All Week"];
-            } else if (item.length == 1) {
-              item.map((it) => (dayTextArr = [weekDays[it].name]));
+            } else if (
+              item.length > 0 &&
+              item.length < relationshipArr[index].length
+            ) {
+              const name = item
+                .map((key) => weekDays[key]?.name)
+                .filter((it) => !isNil(it));
+              dayTextArr.push(...name);
             } else {
               dayTextArr = [];
             }
@@ -51,8 +57,14 @@ const TimeWheel = (props: TextAreaProps) => {
           case 2:
             if (item.length == 2) {
               timeTextArr = ["All Day"];
-            } else if (item.length == 1) {
-              item.map((it) => (timeTextArr = [dayliys[it].name]));
+            } else if (
+              item.length > 0 &&
+              item.length < relationshipArr[index].length
+            ) {
+              const name = item
+                .map((key) => dayliys[key]?.name)
+                .filter((it) => !isNil(it));
+              timeTextArr.push(...name);
             } else {
               timeTextArr = [];
             }
@@ -70,7 +82,7 @@ const TimeWheel = (props: TextAreaProps) => {
                           (day: { index: number }) => key === day.index
                         )?.name
                     )
-                    .filter((it) => !_.isNil(it));
+                    .filter((it) => !isNil(it));
                   dayTextArr.push(...name);
                 }
               });
@@ -89,7 +101,7 @@ const TimeWheel = (props: TextAreaProps) => {
                       );
                       return hours?.name ? hours.name + "" : null;
                     })
-                    .filter((it) => !_.isNil(it));
+                    .filter((it) => !isNil(it));
                   timeTextArr.push(...name);
                 }
               });

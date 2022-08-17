@@ -50,6 +50,7 @@ export interface CustomField {
 }
 
 export interface RjsfProps {
+  noSubmit?: boolean; // 仅做展示,不提交表单
   // ----------------------------- 常用属性 start --------------------------------
   schema?: JSONSchema7; // 配置
   uiSchema?: UiSchema; // 描述和样式

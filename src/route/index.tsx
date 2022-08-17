@@ -18,6 +18,7 @@ import { BasicLayoutForm } from "src/pages/schema/rightFormSchema";
 import { ThemesForm } from "src/pages/schema/themesSchema";
 import { WidgetsForm } from "src/pages/schema/widgetsSchemas";
 import { FieldsForm } from "src/pages/schema/fieldsSchemas";
+import { ValidateForm } from "src/pages/schema/validate";
 
 export const Routers = [
   {
@@ -37,6 +38,7 @@ export const Routers = [
           { path: "/rjsf-form/field", element: <FieldsForm /> },
           { path: "/rjsf-form/BasicLayoutForm", element: <BasicLayoutForm /> },
           { path: "/rjsf-form/ThemeForm", element: <ThemesForm /> },
+          { path: "/rjsf-form/ValidateForm", element: <ValidateForm /> },
         ],
       },
       { path: "/idSearch", label: "idSearch", element: <IdSearch /> },
