@@ -90,6 +90,7 @@ export default class Pie extends Component {
             ...itemStyle,
             color: itemStyle.color(1),
           },
+          startAngle: 90 + 360 / weekday.length,
           data: weekday,
         },
         {
@@ -101,7 +102,7 @@ export default class Pie extends Component {
             ...itemStyle,
             color: itemStyle.color(2),
           },
-          startAngle: dayliysObj.startAngleInside, // 起始角度
+          startAngle: dayliysObj.startAngle, // 起始角度
           data: dayliysObj.data.map(
             (item: { title: any; name: any; children: object[] }) => ({
               ...item,
@@ -114,7 +115,7 @@ export default class Pie extends Component {
           radius: ["75%", "95%"],
           avoidLabelOverlap: false,
           ...series,
-          startAngle: dayliysObj.startAngleOutside, // 起始角度
+          startAngle: 90 + 360 / dayHour.length,
           itemStyle: {
             ...itemStyle,
             color: itemStyle.color(3),
