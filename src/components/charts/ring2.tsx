@@ -74,6 +74,7 @@ export default class Pie extends Component {
             ...itemStyle,
             color: itemStyle.color(0),
           },
+          startAngle: dayliysObj?.weekDaysStartAngle || 90, // 起始角度
           data: weekDays.map(
             (item: { title: any; name: any; children: object[] }) => ({
               ...item,
@@ -102,9 +103,9 @@ export default class Pie extends Component {
             ...itemStyle,
             color: itemStyle.color(2),
           },
-          startAngle: dayliysObj.startAngle, // 起始角度
-          data: dayliysObj.data.map(
-            (item: { title: any; name: any; children: object[] }) => ({
+          startAngle: dayliysObj?.dayliysStartAngle || 90, // 起始角度
+          data: dayliysObj.dayliysData.map(
+            (item: { name: string; children: object[] }) => ({
               ...item,
               value: item.children.length,
             })

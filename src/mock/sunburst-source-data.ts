@@ -43,8 +43,6 @@ const dayliys1 = [
   },
 ];
 
-console.log("dayliys1", dayliys1);
-
 const dayliys2 = [
   {
     name: "Before Dawn",
@@ -68,4 +66,4 @@ const dayliys2 = [
   },
 ];
 
-export { weekDays, weekday, dayliys1, dayliys2, dayHour };
+export { weekDays, weekday, dayHour, dayliys1 };
