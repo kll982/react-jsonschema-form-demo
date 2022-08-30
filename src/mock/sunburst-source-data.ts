@@ -66,4 +66,4 @@ const dayliys2 = [
   },
 ];
 
-export { weekDays, weekday, dayHour, dayliys1 };
+export { weekDays, weekday, dayHour, dayliys1, dayliys2 };

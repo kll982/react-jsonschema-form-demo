@@ -1,4 +1,5 @@
-import { bgColor, colors } from "@/mock/sunburst-color";
+const colors = ["rgba(0,145,255,.4)", "rgba(0,145,255,.3)"];
+const bgColor = "#f5f5f5";
 
 const defaultPieOption = {
   backgroundColor: bgColor,
@@ -9,8 +10,7 @@ const defaultPieOption = {
       fontSize: 10,
     },
     itemStyle: {
-      color: (index: number) =>
-        index % 2 === 1 ? "rgba(0,145,255,.3)" : "rgba(0,145,255,.4)",
+      color: (index: number) => colors[index % 2],
       borderColor: bgColor,
       borderWidth: 2,
     },

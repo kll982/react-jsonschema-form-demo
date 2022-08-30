@@ -1,7 +1,8 @@
-import { colors, bgColor } from "./sunburst-color";
 import { weekDays, dayliys1, dayliys2 } from "./sunburst-source-data";
 
-const dayliys = dayliys1;
+const colors = ["rgba(0,145,255,.4)", "rgba(0,145,255,.3)"];
+const bgColor = "#f5f5f5";
+const dayliys = dayliys2;
 
 const deepData = (weekDays = [], dayliys = []) => {
   if (!weekDays) return [];
