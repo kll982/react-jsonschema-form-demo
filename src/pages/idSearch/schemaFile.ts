@@ -5,22 +5,18 @@ const idSearchSchema = {
       label: "string",
       type: "string",
     },
-
     string1: {
       label: "boolean",
       type: "boolean",
     },
-
     rangeTime: {
       label: "rangeTime",
       type: "string",
     },
-
     textArea: {
       label: "textArea",
       type: "string",
     },
-
     string4: {
       label: "string",
       type: "string",
@@ -28,7 +24,6 @@ const idSearchSchema = {
         span: 6,
       },
     },
-
     string5: {
       label: "string",
       type: "string",
@@ -36,7 +31,6 @@ const idSearchSchema = {
         span: 6,
       },
     },
-
     string6: {
       label: "string",
       type: "string",
@@ -44,7 +38,6 @@ const idSearchSchema = {
         span: 6,
       },
     },
-
     string7: {
       label: "string",
       type: "string",
