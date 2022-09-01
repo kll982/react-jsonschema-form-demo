@@ -9,8 +9,8 @@ const idSearchSchema = {
       label: "boolean",
       type: "boolean",
     },
-    rangeTime: {
-      label: "rangeTime",
+    rangeDateTime: {
+      label: "rangeDateTime",
       type: "string",
     },
     textArea: {

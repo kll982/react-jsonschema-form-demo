@@ -18,8 +18,8 @@ const defaultSchema = {
     //   title: "经纬度",
     //   type: "object",
     // },
-    rangeTime: {
-      title: "rangeTime",
+    rangeDateTime: {
+      title: "rangeDateTime",
       type: "object",
     },
     rangeDate: {
@@ -54,8 +54,8 @@ const defaultUiSchema = {
   // geoHook: {
   //   "ui:field": "geoHooks",
   // },
-  rangeTime: {
-    "ui:field": "rangeTime",
+  rangeDateTime: {
+    "ui:field": "rangeDateTime",
   },
   rangeDate: {
     "ui:field": "rangeDate",

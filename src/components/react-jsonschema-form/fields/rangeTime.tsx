@@ -76,7 +76,7 @@ export const RangeDate = (props: {
   );
 };
 
-export const RangeTime = (props: {
+export const RangeDateTime = (props: {
   onChange: (value: { start: string | undefined; end: string | undefined }) => void;
   formData: {
     start: string;
