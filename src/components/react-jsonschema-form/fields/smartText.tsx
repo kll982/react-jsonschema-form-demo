@@ -8,7 +8,7 @@ const { TextArea } = Input;
 type Textvalue = TextareaHTMLAttributes<HTMLTextAreaElement>["value"];
 interface TextAreaProps {
   schema: JSONSchema7;
-  uiSchema?: UiSchema;
+  uiSchema: UiSchema;
   formData: {
     text: Textvalue;
     check: boolean;

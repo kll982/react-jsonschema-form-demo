@@ -22,6 +22,7 @@ const defaultSchema = {
       title: "rangeDate",
       type: "object",
     },
+    echoSelectIdText: { tile: 'echoSelectIdText', type: 'string' },
     smartText: {
       title: "smartText",
       type: "object",
@@ -57,6 +58,7 @@ const defaultUiSchema = {
       showTime: true,
     }
   },
+  echoSelectIdText: { "ui:field": 'echoSelectIdText' },
   smartText: {
     "ui:field": "smartText",
     "ui:option": { prefix: "id" },
