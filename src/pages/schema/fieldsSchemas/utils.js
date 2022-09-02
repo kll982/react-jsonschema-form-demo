@@ -22,7 +22,7 @@ const defaultSchema = {
       title: "rangeDate",
       type: "object",
     },
-    echoSelectIdText: { tile: 'echoSelectIdText', type: 'string' },
+    echoSelectIdText: { title: 'echoSelectIdText', type: 'string' },
     smartText: {
       title: "smartText",
       type: "object",

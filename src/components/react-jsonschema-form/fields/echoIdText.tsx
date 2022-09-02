@@ -15,12 +15,12 @@ interface TextAreaProps {
 }
 
 const EchoSelectIdText = (props: TextAreaProps) => {
-  const { formData, onChange, uiSchema } = props;
+  const { formData, onChange, uiSchema, schema } = props;
   const options = uiSchema['ui:option'] || {};
   return (
     <Row>
       <Col span={24}>
-        <label>title</label>
+        <label>{props?.schema?.title}</label>
       </Col>
       <Col span={24}>
         <TextArea
